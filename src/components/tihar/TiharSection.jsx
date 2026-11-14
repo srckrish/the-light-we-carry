@@ -7,7 +7,7 @@ import tiharDays from "../../data/tihar";
 import TiharChapter from "./TiharChapter";
 import TiharTimeline from "./TiharTimeline";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 export default function TiharSection() {
   const [activeDay, setActiveDay] = useState(-1);
@@ -56,39 +56,34 @@ export default function TiharSection() {
     <section
       ref={sectionRef}
       id="tihar"
-      className="relative overflow-hidden bg-midnight px-6 py-24 sm:py-32"
+      className="relative bg-midnight px-6 py-24 sm:py-32"
     >
-      <div className="mx-auto max-w-7xl">
-        {/* Section introduction */}
-        <div className="mb-16 max-w-2xl sm:mb-20">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-14 max-w-2xl sm:mb-16">
           <p className="mb-5 text-xs uppercase tracking-[0.35em] text-diya-gold">
-            Five days of gratitude
+            Tihar
           </p>
 
-          <h2 className="font-display text-5xl font-semibold leading-tight text-ivory sm:text-7xl">
-            Five Days,
+          <h2 className="font-display text-5xl font-semibold leading-[0.95] text-ivory sm:text-7xl">
+            Five days,
             <br />
-            Five Lights.
+            five lights.
           </h2>
 
-          <p className="mt-6 max-w-xl text-sm leading-7 text-ivory/65 sm:text-base">
-            A celebration of the lives, bonds, and blessings around us.
-            Each day of Tihar carries its own meaning, its own tradition,
-            and a reason to be grateful.
+          <p className="mt-6 max-w-xl text-sm leading-7 text-ivory/80 sm:text-base">
+            Thanks, in turn, for crows, dogs, cows, oxen, the self and
+            siblings. The row of lights is a way through the story. Traditions
+            overlap, and they differ from home to home.
           </p>
         </div>
 
-        {/* Five-day timeline */}
-        <TiharTimeline activeDay={activeDay} />
+        <div className="sticky top-0 z-30 -mx-6 mb-6 border-b border-ivory/10 bg-midnight/95 px-6 py-4">
+          <TiharTimeline activeDay={activeDay} />
+        </div>
 
-        {/* Tihar chapters */}
-        <div className="grid grid-cols-1 gap-x-12 md:grid-cols-2 md:gap-x-16">
+        <div>
           {tiharDays.map((day, index) => (
-            <TiharChapter
-              key={day.id}
-              day={day}
-              index={index}
-            />
+            <TiharChapter key={day.id} day={day} index={index} />
           ))}
         </div>
       </div>

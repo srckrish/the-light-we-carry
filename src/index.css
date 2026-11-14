@@ -24,8 +24,8 @@
   --color-night: #0F1B2A;
 
   /* Fonts */
-  --font-display: "Cormorant Garamond", serif;
-  --font-body: "DM Sans", sans-serif;
+  --font-display: "Cormorant Garamond", "Noto Sans Devanagari", serif;
+  --font-body: "DM Sans", "Noto Sans Devanagari", sans-serif;
 }
 
 
@@ -131,6 +131,110 @@
   visibility: hidden;
 }
 
+.diya-hint .diya-hint-glow {
+  animation: hint-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes hint-glow {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.95;
+  }
+}
+
+.crow-wing,
+.dog-tail,
+.ox-tail,
+.tika-bloom {
+  transform-box: fill-box;
+}
+
+.crow-wing {
+  transform-origin: 80% 80%;
+  animation: wing-lift 3.4s ease-in-out infinite;
+}
+
+.dog-tail,
+.ox-tail {
+  transform-origin: 80% 70%;
+  animation: tail-sway 2.8s ease-in-out infinite;
+}
+
+.tika-bloom {
+  transform-origin: center;
+  animation: bloom-turn 5s ease-in-out infinite;
+}
+
+.cow-lamps {
+  animation: lamp-glow 2.8s ease-in-out infinite;
+}
+
+@keyframes wing-lift {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(-7deg);
+  }
+}
+
+@keyframes tail-sway {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(-8deg);
+  }
+}
+
+@keyframes bloom-turn {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes lamp-glow {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.chhath-scrub {
+  display: none;
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .chhath-stack {
+    display: none;
+  }
+
+  .chhath-scrub {
+    display: block;
+  }
+
+  .chhath-diyas-start {
+    transform: translateY(-170px);
+  }
+}
+
 
 /* =========================================
    8. WATER RIPPLES
@@ -191,7 +295,13 @@
     animation: none;
   }
 
-  .water-ripple {
+  .water-ripple,
+  .diya-hint .diya-hint-glow,
+  .crow-wing,
+  .dog-tail,
+  .ox-tail,
+  .tika-bloom,
+  .cow-lamps {
     animation: none;
   }
 }

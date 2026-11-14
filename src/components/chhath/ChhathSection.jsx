@@ -1,4 +1,3 @@
-
 import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -7,34 +6,55 @@ import { useGSAP } from "@gsap/react";
 import RiverScene from "./RiverScene";
 import { chhathPreparation } from "../../data/chhath";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
-const mobilePanels = [
+const panels = [
   {
-    id: "mobile-sunset",
-    label: "Sandhya Arghya · सन्ध्या अर्घ्य",
-    heading: "The Last Light of Day",
-    text: "As the sun descends, devotees gather at the water's edge to offer Arghya to Surya and pray to Chhathi Maiya.",
-    background:
-      "linear-gradient(to bottom, #D96B43, #F2A65A 55%, #416C70)",
+    id: "sandhya-arghya",
+    phase: "sunset",
+    label: "Sandhya Arghya",
+    devanagari: "सन्ध्या अर्घ्य",
+    heading: "The setting sun",
+    text: "At the water’s edge, offerings are made to Surya and Chhathi Maiya as the sun goes down.",
   },
   {
-    id: "mobile-night",
-    label: "Between sunset and sunrise",
-    heading: "A Night of Devotion",
-    text: "Lamps glow beside the water. Families remain close, while prayers carry through the quiet darkness.",
-    background:
-      "linear-gradient(to bottom, #0F1B2A, #192D42 60%, #243F50)",
+    id: "chhath-night",
+    phase: "night",
+    label: "Between the offerings",
+    devanagari: "",
+    heading: "The bank stays lit",
+    text: "The five lights have come down to the water. The offering waits there through the night.",
   },
   {
-    id: "mobile-sunrise",
-    label: "Usha Arghya · उषा अर्घ्य",
-    heading: "The First Light of Dawn",
-    text: "Devotees return to the water to offer Arghya to the rising sun, welcoming a new day with hope.",
-    background:
-      "linear-gradient(to bottom, #405B79, #E99B70 55%, #F2C56E)",
+    id: "usha-arghya",
+    phase: "sunrise",
+    label: "Usha Arghya",
+    devanagari: "उषा अर्घ्य",
+    heading: "The rising sun",
+    text: "At sunrise the offering is made again, to the sun as it returns.",
   },
 ];
+
+function SceneCopy({ label, devanagari, heading, text, copyRef, className = "" }) {
+  return (
+    <div ref={copyRef} className={`max-w-sm ${className}`}>
+      <div className="rounded-2xl bg-[#11110F]/80 px-5 py-5 sm:px-6">
+        <p className="text-[0.7rem] uppercase tracking-[0.28em] text-diya-gold">
+          {label}
+          {devanagari ? (
+            <span lang="ne" className="ml-2 normal-case tracking-normal text-ivory/70">
+              {devanagari}
+            </span>
+          ) : null}
+        </p>
+        <h3 className="mt-2 font-display text-3xl font-semibold leading-tight text-ivory sm:text-4xl">
+          {heading}
+        </h3>
+        <p className="mt-3 text-sm leading-6 text-ivory/80">{text}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function ChhathSection() {
   const sectionRef = useRef(null);
@@ -44,7 +64,12 @@ export default function ChhathSection() {
   const nightSkyRef = useRef(null);
   const sunriseSkyRef = useRef(null);
   const sunRef = useRef(null);
+  const reflectRef = useRef(null);
+  const waterShadeRef = useRef(null);
+  const diyasRef = useRef(null);
+  const courtyardRef = useRef(null);
 
+  const driftTextRef = useRef(null);
   const sunsetTextRef = useRef(null);
   const nightTextRef = useRef(null);
   const sunriseTextRef = useRef(null);
@@ -53,268 +78,164 @@ export default function ChhathSection() {
     () => {
       const mm = gsap.matchMedia();
 
-      // =====================================
-      // DESKTOP: PINNED SCRUB EXPERIENCE
-      // =====================================
-
       mm.add(
         "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
         () => {
+          gsap.set(courtyardRef.current, { opacity: 1 });
+          gsap.set(nightSkyRef.current, { opacity: 0 });
+          gsap.set(sunriseSkyRef.current, { opacity: 0 });
+          gsap.set(diyasRef.current, { y: -170 });
+          gsap.set(sunRef.current, { y: -20, opacity: 1 });
+          gsap.set(reflectRef.current, { opacity: 0.15 });
+          gsap.set(waterShadeRef.current, { opacity: 0 });
+          gsap.set(driftTextRef.current, { opacity: 1, y: 0 });
+          gsap.set(sunsetTextRef.current, { opacity: 0, y: 16 });
+          gsap.set(nightTextRef.current, { opacity: 0, y: 16 });
+          gsap.set(sunriseTextRef.current, { opacity: 0, y: 16 });
+
           const timeline = gsap.timeline({
             scrollTrigger: {
               trigger: sceneRef.current,
               start: "top top",
-              end: "+=300%",
-              scrub: true,
+              end: "+=340%",
+              scrub: 0.65,
               pin: true,
               anticipatePin: 1,
             },
           });
 
-          // Initial states
-          gsap.set(sunsetSkyRef.current, { opacity: 1 });
-          gsap.set(nightSkyRef.current, { opacity: 0 });
-          gsap.set(sunriseSkyRef.current, { opacity: 0 });
+          timeline.to(diyasRef.current, { y: 0, duration: 1.15, ease: "none" }, 0);
+          timeline.to(courtyardRef.current, { opacity: 0, duration: 1.15, ease: "none" }, 0);
+          timeline.to(sunRef.current, { y: 30, duration: 1.15, ease: "none" }, 0);
+          timeline.to(reflectRef.current, { opacity: 0.45, duration: 1.15, ease: "none" }, 0);
+          timeline.to(driftTextRef.current, { opacity: 0, y: -12, duration: 0.45, ease: "none" }, 0.5);
+          timeline.to(sunsetTextRef.current, { opacity: 1, y: 0, duration: 0.45, ease: "none" }, 0.75);
 
-          gsap.set(sunRef.current, {
-            y: 0,
-            opacity: 1,
-          });
+          timeline.to(sunRef.current, { y: 210, duration: 1, ease: "none" }, 1.2);
+          timeline.to(sunsetTextRef.current, { opacity: 0, y: -12, duration: 0.4, ease: "none" }, 1.9);
 
-          gsap.set(sunsetTextRef.current, { opacity: 1 });
-          gsap.set(nightTextRef.current, { opacity: 0 });
-          gsap.set(sunriseTextRef.current, { opacity: 0 });
+          timeline.to(sunsetSkyRef.current, { opacity: 0, duration: 0.75, ease: "none" }, 2.1);
+          timeline.to(nightSkyRef.current, { opacity: 1, duration: 0.75, ease: "none" }, 2.1);
+          timeline.to(sunRef.current, { opacity: 0, duration: 0.35, ease: "none" }, 2.2);
+          timeline.to(reflectRef.current, { opacity: 0, duration: 0.35, ease: "none" }, 2.2);
+          timeline.to(waterShadeRef.current, { opacity: 0.42, duration: 0.75, ease: "none" }, 2.1);
+          timeline.to(nightTextRef.current, { opacity: 1, y: 0, duration: 0.4, ease: "none" }, 2.45);
+          timeline.to({}, { duration: 0.55 });
+          timeline.to(nightTextRef.current, { opacity: 0, y: -12, duration: 0.35, ease: "none" });
 
-          // SUNSET
-          timeline.to(
-            sunRef.current,
-            {
-              y: 150,
-              duration: 1,
-              ease: "none",
-            },
-            0
-          );
-
-          timeline.to(
-            sunsetTextRef.current,
-            {
-              opacity: 0,
-              y: -25,
-              duration: 0.5,
-            },
-            0.7
-          );
-
-          // SUNSET -> NIGHT
-          timeline.to(
-            sunsetSkyRef.current,
-            {
-              opacity: 0,
-              duration: 0.8,
-            },
-            1
-          );
-
-          timeline.to(
-            nightSkyRef.current,
-            {
-              opacity: 1,
-              duration: 0.8,
-            },
-            1
-          );
-
-          timeline.to(
-            sunRef.current,
-            {
-              opacity: 0,
-              duration: 0.4,
-            },
-            1.2
-          );
-
-          timeline.to(
-            nightTextRef.current,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-            },
-            1.25
-          );
-
-          // HOLD NIGHT
-          timeline.to({}, { duration: 0.7 });
-
-          timeline.to(
-            nightTextRef.current,
-            {
-              opacity: 0,
-              y: -25,
-              duration: 0.5,
-            }
-          );
-
-          // NIGHT -> SUNRISE
-          timeline.to(
-            nightSkyRef.current,
-            {
-              opacity: 0,
-              duration: 0.8,
-            },
-            2.5
-          );
-
-          timeline.to(
-            sunriseSkyRef.current,
-            {
-              opacity: 1,
-              duration: 0.8,
-            },
-            2.5
-          );
-
-          timeline.to(
-            sunRef.current,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 1,
-              ease: "none",
-            },
-            2.5
-          );
-
-          timeline.to(
-            sunriseTextRef.current,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-            },
-            2.9
-          );
+          timeline.to(nightSkyRef.current, { opacity: 0, duration: 0.75, ease: "none" });
+          timeline.to(sunriseSkyRef.current, { opacity: 1, duration: 0.75, ease: "none" }, "<");
+          timeline.to(waterShadeRef.current, { opacity: 0.08, duration: 0.75, ease: "none" }, "<");
+          timeline.to(sunRef.current, { opacity: 1, y: 10, duration: 0.9, ease: "none" }, "<");
+          timeline.to(reflectRef.current, { opacity: 0.55, duration: 0.75, ease: "none" }, "<");
+          timeline.to(sunriseTextRef.current, { opacity: 1, y: 0, duration: 0.45, ease: "none" }, "-=0.4");
         }
       );
 
-      // =====================================
-      // MOBILE: NO PINNING OR SCRUBBING
-      // =====================================
+      mm.add("(max-width: 767px), (prefers-reduced-motion: reduce)", () => {
+        const cards = gsap.utils.toArray(".chhath-mobile-panel", sectionRef.current);
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce) return;
 
-      mm.add(
-        "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
-        () => {
-          const panels = gsap.utils.toArray(
-            ".chhath-mobile-panel",
-            sectionRef.current
-          );
-
-          panels.forEach((panel) => {
-            gsap.from(panel.querySelector(".chhath-panel-content"), {
-              y: 30,
-              opacity: 0,
-              duration: 0.8,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: panel,
-                start: "top 80%",
-                once: true,
-              },
-            });
+        cards.forEach((panel) => {
+          gsap.from(panel.querySelector(".chhath-panel-content"), {
+            y: 24,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: panel,
+              start: "top 80%",
+              once: true,
+            },
           });
-        }
-      );
-
-      // =====================================
-      // REDUCED MOTION: STATIC PANELS
-      // =====================================
-
-      mm.add("(prefers-reduced-motion: reduce)", () => {
-        // No pinning, no scrub, no reveal animations.
-        // The mobile/static panels remain visible.
+        });
       });
 
       return () => mm.revert();
     },
-    {
-      scope: sectionRef,
-    }
+    { scope: sectionRef }
   );
 
   return (
-    <section
-      ref={sectionRef}
-      id="chhath"
-      className="relative overflow-hidden bg-midnight px-5 py-20 sm:px-8 sm:py-28"
-    >
-      <div className="mx-auto max-w-7xl">
-        {/* INTRODUCTION */}
-        <div className="mb-12 max-w-2xl sm:mb-16">
+    <section ref={sectionRef} id="chhath" className="relative bg-midnight">
+      <div className="mx-auto max-w-6xl px-6 pb-10 pt-24 sm:pb-14 sm:pt-32">
+        <div className="max-w-2xl">
           <p className="mb-5 text-xs uppercase tracking-[0.35em] text-diya-gold">
-            From courtyard to riverbank
+            Chhath
           </p>
 
-          <h2 className="font-display text-5xl font-semibold leading-tight text-ivory sm:text-7xl">
-            Where the Sun
+          <h2 className="font-display text-5xl font-semibold leading-[0.95] text-ivory sm:text-7xl">
+            For the setting sun,
             <br />
-            Meets the River.
+            and the rising.
           </h2>
 
-          <p className="mt-6 max-w-xl text-sm leading-7 text-ivory/70 sm:text-base">
-            {chhathPreparation}
-          </p>        </div>
+          <p className="mt-6 max-w-xl text-sm leading-7 text-ivory/80 sm:text-base">
+            Devotion to Surya, the Sun God, and Chhathi Maiya. The river is
+            where the offering is made, not what is worshipped. {chhathPreparation}
+          </p>
+        </div>
+      </div>
 
-        {/* DESKTOP SCRUB SCENE */}
-        <div
-          ref={sceneRef}
-          className="hidden md:block motion-reduce:hidden"
-        >
-          <RiverScene
-            sunsetSkyRef={sunsetSkyRef}
-            nightSkyRef={nightSkyRef}
-            sunriseSkyRef={sunriseSkyRef}
-            sunRef={sunRef}
-            sunsetTextRef={sunsetTextRef}
-            nightTextRef={nightTextRef}
-            sunriseTextRef={sunriseTextRef}
+      <div ref={sceneRef} className="chhath-scrub relative">
+        <RiverScene
+          mode="scrub"
+          sunsetSkyRef={sunsetSkyRef}
+          nightSkyRef={nightSkyRef}
+          sunriseSkyRef={sunriseSkyRef}
+          sunRef={sunRef}
+          reflectRef={reflectRef}
+          waterShadeRef={waterShadeRef}
+          diyasRef={diyasRef}
+          courtyardRef={courtyardRef}
+        />
+
+        <div className="pointer-events-none absolute left-6 top-8 z-40 sm:left-12 sm:top-12">
+          <SceneCopy
+            copyRef={driftTextRef}
+            label="From the courtyard"
+            heading="Five lights leave home"
+            text="The lamps of Tihar travel down to the bank, and another observance begins."
+          />
+          <SceneCopy
+            copyRef={sunsetTextRef}
+            className="absolute left-0 top-0 opacity-0"
+            label="Sandhya Arghya"
+            devanagari="सन्ध्या अर्घ्य"
+            heading="The setting sun"
+            text="Offerings are made to Surya and Chhathi Maiya as the sun goes down."
+          />
+          <SceneCopy
+            copyRef={nightTextRef}
+            className="absolute left-0 top-0 opacity-0"
+            label="Between the offerings"
+            heading="The bank stays lit"
+            text="Small lamps remain beside the water. The morning offering is still ahead."
+          />
+          <SceneCopy
+            copyRef={sunriseTextRef}
+            className="absolute left-0 top-0 opacity-0"
+            label="Usha Arghya"
+            devanagari="उषा अर्घ्य"
+            heading="The rising sun"
+            text="At sunrise the offering is made again, to the sun as it returns."
           />
         </div>
+      </div>
 
-        {/* MOBILE / REDUCED-MOTION PANELS */}
-        <div className="flex flex-col gap-6 md:hidden motion-reduce:md:flex">
-          {mobilePanels.map((panel) => (
-            <article
-              key={panel.id}
-              className="chhath-mobile-panel relative flex min-h-[420px] items-end overflow-hidden rounded-2xl p-6 sm:min-h-[480px] sm:p-10"
-              style={{ background: panel.background }}
-            >
-              <div
-                aria-hidden="true"
-                className="absolute left-1/2 top-[20%] h-24 w-24 -translate-x-1/2 rounded-full bg-[#F2C56E] opacity-80 shadow-[0_0_70px_25px_rgba(242,197,110,0.25)]"
-              />
-
-              <div
-                aria-hidden="true"
-                className="absolute bottom-0 left-0 h-[32%] w-full bg-[#416C70]/80"
-              />
-
-              <div className="chhath-panel-content relative z-10 max-w-lg">
-                <p className="mb-3 text-xs uppercase tracking-[0.25em] text-ivory/70">
-                  {panel.label}
-                </p>
-
-                <h3 className="font-display text-4xl font-semibold text-ivory sm:text-5xl">
-                  {panel.heading}
-                </h3>
-
-                <p className="mt-4 text-sm leading-7 text-ivory/80 sm:text-base">
-                  {panel.text}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
+      <div className="chhath-stack flex flex-col">
+        {panels.map((panel) => (
+          <article
+            key={panel.id}
+            className="chhath-mobile-panel relative flex min-h-dvh items-end overflow-hidden"
+          >
+            <RiverScene mode="panel" phase={panel.phase} />
+            <div className="chhath-panel-content relative z-10 w-full bg-gradient-to-t from-[#11110F] via-[#11110F]/85 to-transparent px-6 pb-10 pt-28">
+              <SceneCopy {...panel} />
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

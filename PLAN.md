@@ -246,29 +246,14 @@ the-light-we-carry/
     index.css
     App.jsx
     main.jsx
-  IDEAS.md  MASTER-PLAN.md  SOURCES.md  README.md
+  IDEAS.md  PLAN.md  SOURCES.md  README.md
 ```
 
 Add files when needed. Do not create empty abstractions.
 
 ---
 
-## 9. Build schedule
 
-Budget: about 3 focused hours on a work day, 6 or more on a day off. If today is your day off, make it the big build day.
-
-| Day | Goal | Done when | Cut line if behind |
-|---|---|---|---|
-| **Sat Nov 14** | Message KUCC. Setup, deploy, tokens, SVG diya, **hero with working ignition**, write all copy into `data/` | Live URL. Diya lights on your phone and feels good | Skip pointer glow |
-| **Sun Nov 15** | Tihar scene: five chapters, five SVGs, timeline, scroll-lit diyas | Five chapters complete and responsive | Reuse one illustration style, simplify the SVG detail |
-| **Mon Nov 16** | Chhath scene: transition, sunset, night, sunrise as static states, then the scrub | Reads well on phone and desktop | Drop the Night state, go sunset to sunrise |
-| **Tue Nov 17** | Greeting card, closing scene and the circle, reduced-motion, wire remaining animations | Card downloads, final diya matches the first | Cut Share, keep Download |
-| **Wed Nov 18** | Polish, real-phone testing, performance, accessibility, README, screenshots, **submit by 6 PM** | Submitted | Cut anything unfinished, never ship it broken |
-| **Thu Nov 19** | Buffer. Critical bug fixes only | Nothing planned | None |
-
-Rule: static first, motion second. Every section must look good with no animation before you animate it.
-
----
 
 ## 10. Scope tiers
 

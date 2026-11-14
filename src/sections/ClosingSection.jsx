@@ -1,4 +1,3 @@
-
 import Diya from "../components/diya/Diya";
 import { useLight } from "../context/LightContext";
 
@@ -21,51 +20,39 @@ export default function ClosingSection() {
       id="closing"
       className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-midnight px-6 py-24 text-center"
     >
-      {/* Background glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-diya-gold/10 blur-[120px]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,237,223,0.05),transparent_58%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[42%] h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(217,164,65,0.16),rgba(217,164,65,0)_68%)]"
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center">
-        {/* Same diya from the hero */}
-        <div className="closing-diya mb-12 w-56 sm:w-72">
-          <Diya
-            lit={lit}
-            className="h-auto w-full"
-          />
+        <div className="closing-diya mb-10 w-52 sm:w-64">
+          <Diya lit={lit} className="h-auto w-full" />
         </div>
 
-        <p className="mb-6 text-xs uppercase tracking-[0.35em] text-diya-gold">
+        <p className="mb-5 text-xs uppercase tracking-[0.35em] text-diya-gold">
           The light remains
         </p>
 
-        <h2 className="font-display text-5xl font-semibold leading-tight text-ivory sm:text-7xl">
-          The Light
-          <br />
-          We Carry.
+        <h2 className="max-w-3xl font-display text-4xl font-semibold leading-[1.05] text-ivory sm:text-6xl">
+          The festivals may end.
+          <span className="mt-3 block text-diya-gold">
+            The light we carry stays.
+          </span>
         </h2>
 
-        <div className="mt-8 space-y-3 text-sm leading-8 text-ivory/70 sm:text-base">
-          <p>
-            The lamps may fade, the celebrations may end,
-            but the light we share lives on.
-          </p>
-
-          <p>
-            In every act of kindness, every moment of gratitude,
-            and every home we make brighter.
-          </p>
-        </div>
-
-        <p className="mt-10 font-display text-2xl italic text-diya-gold sm:text-3xl">
-          May your light never fade.
+        <p className="mt-8 max-w-md font-display text-2xl italic leading-snug text-ivory sm:text-3xl">
+          May gratitude find its way into every home.
         </p>
 
         <button
           type="button"
           onClick={handleLightAgain}
-          className="mt-12 rounded-full border border-diya-gold/60 px-8 py-3 text-sm font-medium text-diya-gold transition-colors duration-300 hover:bg-diya-gold hover:text-midnight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-diya-gold"
+          className="mt-12 rounded-full border border-diya-gold/70 px-8 py-3 text-sm tracking-wide text-diya-gold transition-colors duration-300 hover:bg-diya-gold hover:text-midnight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-diya-gold"
         >
           Light it again
         </button>

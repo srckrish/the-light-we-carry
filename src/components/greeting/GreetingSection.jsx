@@ -25,9 +25,9 @@ export default function GreetingSection() {
             Light.
           </h2>
 
-          <p className="mt-6 text-sm leading-7 text-ivory/65 sm:text-base">
-            Make this celebration a little more personal.
-            Add your name and choose a wish to share with someone.
+          <p className="mt-6 text-sm leading-7 text-ivory/80 sm:text-base">
+            Write a name, choose a wish, and keep a card. It is drawn on
+            this device. Nothing is uploaded or stored.
           </p>
         </div>
 

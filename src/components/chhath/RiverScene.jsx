@@ -1,177 +1,204 @@
-
 import Silhouettes from "./Silhouettes";
 
+const skies = {
+  sunset:
+    "linear-gradient(to bottom, #C45B3E 0%, #E88D45 40%, #F2C56E 64%, #3E6A68 100%)",
+  night:
+    "linear-gradient(to bottom, #0F1B2A 0%, #163044 62%, #1C3C44 100%)",
+  sunrise:
+    "linear-gradient(to bottom, #3E5874 0%, #E7A07A 48%, #F2C56E 72%, #3E6A68 100%)",
+};
+
+function Stars() {
+  const stars = [
+    [8, 12], [18, 22], [30, 8], [42, 18], [55, 10], [68, 24],
+    [76, 8], [88, 16], [14, 34], [36, 30], [62, 36], [84, 32],
+    [24, 14], [48, 8], [92, 12],
+  ];
+
+  return (
+    <svg
+      viewBox="0 0 100 40"
+      className="absolute inset-x-0 top-0 h-[46%] w-full"
+      aria-hidden="true"
+      preserveAspectRatio="xMidYMin slice"
+    >
+      {stars.map(([x, y]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r={x % 3 === 0 ? 0.55 : 0.32} fill="#F5EDDF" opacity={x % 2 === 0 ? 0.85 : 0.45} />
+      ))}
+    </svg>
+  );
+}
+
+function BankDiya({ x }) {
+  return (
+    <g transform={`translate(${x} 690)`}>
+      <ellipse cx="0" cy="22" rx="18" ry="4" fill="#000" opacity="0.25" />
+      <path d="M-16 0c3 14 29 14 32 0-3 16-12 24-16 24s-13-8-16-24Z" fill="#C9844A" />
+      <path d="M-16 0c4 6 28 6 32 0" fill="none" stroke="#E7C98A" strokeWidth="2" />
+      <path d="M-9 0c2 5 16 5 18 0" fill="#F2C56E" opacity="0.8" />
+      <path
+        d="M0 0C-4-14-1-26 0-38c1 12 4 24 0 38Z"
+        fill="#F2C56E"
+        className="diya-flame-flicker"
+      />
+      <path d="M0-6c-2-8 0-14 0-18 1 5 2 10 0 18Z" fill="#FFF6D4" />
+    </g>
+  );
+}
+
+function Landscape({ diyasRef, waterShadeRef, reflectRef, live = false, shade = 0, reflect = 0.4 }) {
+  return (
+    <svg
+      viewBox="0 0 1440 800"
+      preserveAspectRatio="xMidYMax slice"
+      className="absolute inset-0 h-full w-full"
+      aria-hidden="true"
+    >
+      <path
+        d="M0 430C180 330 320 390 480 410C680 300 820 370 1040 400C1220 330 1340 380 1440 360V560H0Z"
+        fill="#243E44"
+      />
+      <path
+        d="M0 490C220 410 380 470 560 480C760 390 940 460 1160 470C1300 440 1380 470 1440 450V640H0Z"
+        fill="#1A3338"
+      />
+
+      <path
+        d="M0 545C260 515 480 590 740 555C980 520 1180 585 1440 530V800H0Z"
+        fill="#416C70"
+      />
+      <path
+        d="M0 610C320 575 620 650 940 600C1160 560 1300 630 1440 585V800H0Z"
+        fill="#2E5558"
+        opacity="0.55"
+      />
+
+      <ellipse
+        ref={live ? reflectRef : undefined}
+        cx="980"
+        cy="640"
+        rx="90"
+        ry="16"
+        fill="#F2C56E"
+        opacity={live ? 0.4 : reflect}
+      />
+
+      <g className="water-ripple" opacity="0.45">
+        <path d="M180 600c80-12 140 8 220-4" stroke="#F2C56E" strokeWidth="1.5" />
+        <path d="M860 650c90-14 150 10 230-6" stroke="#F5EDDF" strokeWidth="1.4" opacity="0.7" />
+      </g>
+      <g className="water-ripple water-ripple-delayed" opacity="0.35">
+        <path d="M420 680c70-10 120 8 190-4" stroke="#F2C56E" strokeWidth="1.4" />
+        <path d="M1040 700c80-8 130 10 180-4" stroke="#F5EDDF" strokeWidth="1.2" />
+      </g>
+
+      <rect
+        ref={live ? waterShadeRef : undefined}
+        x="0"
+        y="520"
+        width="1440"
+        height="280"
+        fill="#0F1B2A"
+        opacity={live ? 0 : shade}
+      />
+
+      <Silhouettes />
+
+      <path
+        d="M0 700C240 660 460 730 740 690C1040 648 1220 720 1440 675V800H0Z"
+        fill="#3A261E"
+      />
+
+      <g ref={live ? diyasRef : undefined} className={live ? "chhath-diyas-start" : undefined}>
+        {[150, 390, 680, 980, 1240].map((x) => (
+          <BankDiya key={x} x={x} />
+        ))}
+      </g>
+    </svg>
+  );
+}
+
+function Sun({ sunRef, className = "" }) {
+  return (
+    <div ref={sunRef} className={`absolute z-10 ${className}`} aria-hidden="true">
+      <div className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(242,197,110,0.5),rgba(242,197,110,0)_68%)]" />
+      <div className="relative h-24 w-24 rounded-full bg-[radial-gradient(circle_at_38%_36%,#FFF8DE_0%,#F2C56E_46%,#E08A3E_100%)] sm:h-32 sm:w-32" />
+    </div>
+  );
+}
+
 export default function RiverScene({
+  mode = "scrub",
+  phase = "sunset",
   sunsetSkyRef,
   nightSkyRef,
   sunriseSkyRef,
   sunRef,
-  sunsetTextRef,
-  nightTextRef,
-  sunriseTextRef,
+  reflectRef,
+  waterShadeRef,
+  diyasRef,
+  courtyardRef,
 }) {
+  if (mode === "panel") {
+    return (
+      <div className="absolute inset-0" aria-hidden="true">
+        <div className="absolute inset-0" style={{ background: skies[phase] }} />
+        {phase === "night" && <Stars />}
+        {phase !== "night" && (
+          <Sun
+            className={
+              phase === "sunrise"
+                ? "left-[58%] top-[16%]"
+                : "left-[64%] top-[30%]"
+            }
+          />
+        )}
+        <Landscape
+          shade={phase === "night" ? 0.45 : 0}
+          reflect={phase === "night" ? 0 : 0.45}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
-      className="relative isolate h-[600px] w-full overflow-hidden bg-[#0F1B2A] sm:h-[700px]"
-      aria-label="Chhath riverbank at sunset, night and sunrise"
+      className="relative h-dvh min-h-[640px] w-full overflow-hidden bg-[#0F1B2A]"
+      aria-label="Chhath at the water, from sunset through night to sunrise"
     >
-      {/* SKY LAYERS */}
-
       <div
         ref={sunsetSkyRef}
-        className="absolute inset-0 z-0"
-        style={{
-          opacity: 1,
-          background:
-            "linear-gradient(to bottom, #D96B43 0%, #F2A65A 42%, #E88D45 72%, #416C70 100%)",
-        }}
+        className="absolute inset-0"
+        style={{ background: skies.sunset }}
       />
-
-      <div
-        ref={nightSkyRef}
-        className="absolute inset-0 z-0"
-        style={{
-          opacity: 0,
-          background:
-            "linear-gradient(to bottom, #0F1B2A 0%, #192D42 55%, #243F50 100%)",
-        }}
-      />
-
+      <div ref={nightSkyRef} className="absolute inset-0 opacity-0">
+        <div className="absolute inset-0" style={{ background: skies.night }} />
+        <Stars />
+      </div>
       <div
         ref={sunriseSkyRef}
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 opacity-0"
+        style={{ background: skies.sunrise }}
+      />
+
+      <Sun sunRef={sunRef} className="left-[66%] top-[22%]" />
+
+      <div
+        ref={courtyardRef}
+        className="absolute inset-0"
         style={{
-          opacity: 0,
           background:
-            "linear-gradient(to bottom, #405B79 0%, #E99B70 48%, #F2C56E 78%, #416C70 100%)",
+            "linear-gradient(to bottom, rgba(140,62,42,0.92) 0%, rgba(184,92,56,0.72) 42%, rgba(184,92,56,0.15) 100%)",
         }}
       />
 
-      {/* SUN */}
-      <div
-        ref={sunRef}
-        className="absolute left-1/2 top-[30%] z-10 h-24 w-24 -translate-x-1/2 rounded-full bg-[#F2C56E] shadow-[0_0_70px_25px_rgba(242,197,110,0.3)] sm:h-32 sm:w-32"
-        aria-hidden="true"
+      <Landscape
+        live
+        diyasRef={diyasRef}
+        waterShadeRef={waterShadeRef}
+        reflectRef={reflectRef}
       />
-
-      {/* FAR HILLS */}
-      <svg
-        viewBox="0 0 1440 260"
-        preserveAspectRatio="none"
-        className="absolute bottom-[30%] z-10 h-[25%] w-full"
-        aria-hidden="true"
-      >
-        <path
-          d="M0 180 Q180 50 360 145 Q550 15 740 135 Q930 35 1120 145 Q1280 70 1440 155 L1440 260 L0 260 Z"
-          fill="#263C43"
-        />
-
-        <path
-          d="M0 205 Q200 120 400 185 Q600 95 800 180 Q1000 105 1200 185 Q1320 130 1440 180 L1440 260 L0 260 Z"
-          fill="#1B3037"
-        />
-      </svg>
-
-      {/* WATER */}
-      <div className="absolute bottom-0 z-10 h-[36%] w-full overflow-hidden bg-[#416C70]">
-
-        {/* Water highlights */}
-        <div
-          aria-hidden="true"
-          className="water-ripple absolute left-[8%] top-[20%] h-px w-[22%] bg-[#F2C56E]/50"
-        />
-
-        <div
-          aria-hidden="true"
-          className="water-ripple water-ripple-slow absolute right-[12%] top-[30%] h-px w-[28%] bg-[#F5EDDF]/30"
-        />
-
-        <div
-          aria-hidden="true"
-          className="water-ripple water-ripple-delayed absolute left-[25%] top-[48%] h-px w-[18%] bg-[#F2C56E]/40"
-        />
-
-        <div
-          aria-hidden="true"
-          className="water-ripple water-ripple-slow absolute right-[25%] top-[65%] h-px w-[20%] bg-[#F5EDDF]/25"
-        />
-
-        <div
-          aria-hidden="true"
-          className="water-ripple water-ripple-delayed absolute left-[10%] top-[78%] h-px w-[35%] bg-[#F2C56E]/30"
-        />
-
-      </div>
-
-      {/* DEVOTEE SILHOUETTES */}
-      <Silhouettes />
-
-      {/* RIVERBANK LIGHTS */}
-      <div
-        className="absolute bottom-[12%] left-0 z-30 flex w-full justify-around px-6"
-        aria-hidden="true"
-      >
-        {Array.from({ length: 9 }).map((_, index) => (
-          <span
-            key={index}
-            className="h-2 w-2 rounded-full bg-[#F2C56E] shadow-[0_0_12px_4px_rgba(242,197,110,0.55)]"
-            style={{ opacity: index % 3 === 0 ? 1 : 0.65 }}
-          />
-        ))}
-      </div>
-
-      {/* STORY TEXT: DESKTOP */}
-      <div className="pointer-events-none absolute inset-x-0 top-[8%] z-40 mx-auto flex justify-center px-5 text-center sm:top-[10%]">
-        <div
-          ref={sunsetTextRef}
-          className="absolute w-full max-w-2xl"
-        >
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#F5EDDF]/75">
-            Sandhya Arghya · सन्ध्या अर्घ्य
-          </p>
-          <h2 className="font-display text-4xl font-semibold text-[#F5EDDF] sm:text-6xl">
-            The Last Light of Day
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#F5EDDF]/85 sm:text-base">
-            As the sun descends, devotees gather at the water's edge
-            to offer Arghya to Surya and pray to Chhathi Maiya.
-          </p>
-        </div>
-
-        <div
-          ref={nightTextRef}
-          className="absolute w-full max-w-2xl"
-          style={{ opacity: 0 }}
-        >
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#F5EDDF]/60">
-            Between sunset and sunrise
-          </p>
-          <h2 className="font-display text-4xl font-semibold text-[#F5EDDF] sm:text-6xl">
-            A Night of Devotion
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#F5EDDF]/75 sm:text-base">
-            Lamps glow beside the water. Families remain close,
-            while prayers carry through the quiet darkness.
-          </p>
-        </div>
-
-        <div
-          ref={sunriseTextRef}
-          className="absolute w-full max-w-2xl"
-          style={{ opacity: 0 }}
-        >
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#F5EDDF]/75">
-            Usha Arghya · उषा अर्घ्य
-          </p>
-          <h2 className="font-display text-4xl font-semibold text-[#F5EDDF] sm:text-6xl">
-            The First Light of Dawn
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#F5EDDF]/85 sm:text-base">
-            Devotees return to the water to offer Arghya to the
-            rising sun, welcoming a new day with hope.
-          </p>
-        </div>
-      </div>
     </div>
   );
 }

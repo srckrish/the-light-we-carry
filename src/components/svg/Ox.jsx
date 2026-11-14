@@ -1,80 +1,88 @@
-export default function Ox({ className = "w-full h-full" }) {
+export default function Ox({ className = "" }) {
   return (
     <svg
-      viewBox="0 0 240 180"
+      viewBox="0 0 560 400"
       className={className}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
-      aria-label="Illustration of an ox"
+      aria-label="An ox with a yoke, beside a Mha Puja mandala"
     >
-      {/* Body */}
-      <path
-        d="M48 91 C48 67 71 57 106 57 H151 C177 57 191 77 191 101 V120 H48Z"
-        fill="#D9A441"
-      />
+      <ellipse cx="230" cy="200" rx="170" ry="110" fill="#B85C38" opacity="0.08" />
+      <ellipse cx="220" cy="338" rx="170" ry="14" fill="#000" opacity="0.2" />
 
-      {/* Neck */}
       <path
-        d="M153 73 Q174 60 191 78 L194 119 H157Z"
-        fill="#D9A441"
+        className="ox-tail"
+        d="M78 176c-24 20-18 52 6 66"
+        stroke="#E7D3B5"
+        strokeWidth="6"
+        strokeLinecap="round"
       />
+      <circle cx="86" cy="246" r="5" fill="#E7A33E" />
 
-      {/* Head */}
       <path
-        d="M176 67 C178 48 194 39 209 48 C224 57 226 77 215 91 C205 102 185 94 179 82Z"
-        fill="#D9A441"
+        d="M96 214c4-48 46-78 108-70 16 2 24-22 52-10 28 12 62 6 86 28 22 20 20 48 6 68v58H132c-22-16-38-44-36-74Z"
+        fill="#E7D3B5"
       />
+      <path d="M176 156c28-34 64-18 66 14-32 2-54-2-66-14Z" fill="#E7D3B5" />
 
-      {/* Horns */}
       <path
-        d="M187 52 Q171 40 168 23 Q180 30 190 43"
-        stroke="#B85C38"
+        d="M292 168c8-34 46-52 86-28 22 14 24 40 8 62-28 8-70 4-94-34Z"
+        fill="#E7D3B5"
+      />
+      <path
+        d="M246 118c-28-22-18-52 2-46 16 18 22 40 12 52M360 96c30-16 48 8 36 28-16-4-28-12-36-28Z"
+        stroke="#9F452A"
+        strokeWidth="7"
+        strokeLinecap="round"
+      />
+      <path
+        d="M300 188c-18 2-28 18-16 32 18 4 34-4 36-16 0-10-8-16-20-16Z"
+        fill="#C9844A"
+      />
+      <ellipse cx="392" cy="196" rx="18" ry="12" fill="#C9844A" />
+      <circle cx="386" cy="194" r="2.2" fill="#3A241C" />
+      <circle cx="398" cy="194" r="2.2" fill="#3A241C" />
+      <circle cx="348" cy="164" r="3.5" fill="#3A241C" />
+
+      <path
+        d="M188 118c40-28 108-20 132 8"
+        stroke="#9F452A"
+        strokeWidth="8"
+        strokeLinecap="round"
+      />
+      <path d="M214 112v22M292 108v24" stroke="#6E2E1C" strokeWidth="4" strokeLinecap="round" />
+
+      <path
+        d="M158 292v38M210 292v38M304 292v38M356 276v54"
+        stroke="#E7D3B5"
+        strokeWidth="13"
+        strokeLinecap="round"
+      />
+      <path
+        d="M146 332h24M198 332h24M292 332h24M344 332h24"
+        stroke="#9F452A"
         strokeWidth="4"
         strokeLinecap="round"
       />
-      <path
-        d="M211 48 Q225 34 231 19 Q235 35 220 52"
-        stroke="#B85C38"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
 
-      {/* Ear */}
-      <path
-        d="M180 69 Q162 54 157 68 Q165 81 183 80Z"
-        fill="#B85C38"
-      />
-
-      {/* Muzzle */}
-      <ellipse cx="211" cy="83" rx="12" ry="9" fill="#B85C38" />
-
-      {/* Eye */}
-      <circle cx="205" cy="63" r="3" fill="#B85C38" />
-
-      {/* Legs */}
-      <path
-        d="M70 116 V148 M103 116 V148 M157 116 V148 M181 112 V148"
-        stroke="#D9A441"
-        strokeWidth="9"
-        strokeLinecap="round"
-      />
-
-      {/* Hooves */}
-      <path
-        d="M62 149 H78 M95 149 H111 M149 149 H165 M173 149 H189"
-        stroke="#B85C38"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-
-      {/* Tail */}
-      <path
-        d="M49 78 Q32 90 36 111 L27 119"
-        stroke="#D9A441"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
+      <g transform="translate(468 292)">
+        <circle r="48" fill="#9F452A" />
+        <circle r="38" fill="#F6EFE2" />
+        <circle r="27" fill="#E7A33E" />
+        <circle r="16" fill="#9F452A" />
+        <circle r="6" fill="#F2C56E" />
+        <g fill="#B85C38">
+          <circle cx="0" cy="-32" r="3" />
+          <circle cx="22" cy="-22" r="3" />
+          <circle cx="32" cy="0" r="3" />
+          <circle cx="22" cy="22" r="3" />
+          <circle cx="0" cy="32" r="3" />
+          <circle cx="-22" cy="22" r="3" />
+          <circle cx="-32" cy="0" r="3" />
+          <circle cx="-22" cy="-22" r="3" />
+        </g>
+      </g>
     </svg>
   );
 }

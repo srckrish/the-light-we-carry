@@ -1,76 +1,68 @@
+export default function Crow({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 560 400"
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="A crow perched above a small offering"
+    >
+      <ellipse cx="300" cy="188" rx="170" ry="120" fill="#E7A33E" opacity="0.08" />
 
-export default function Cow({ className = "w-full h-full" }) {
-    return (
-      <svg
-        viewBox="0 0 240 180"
-        className={className}
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        role="img"
-        aria-label="Illustration of a cow"
-      >
-        {/* Body */}
+      <path d="M70 292h430l-16 18H88L70 292Z" fill="#9F452A" />
+      <path d="M70 292h430" stroke="#F2C56E" strokeOpacity="0.55" strokeWidth="2" />
+      <path d="M96 304h372" stroke="#6E2E1C" strokeOpacity="0.35" strokeWidth="3" />
+
+      <ellipse cx="132" cy="278" rx="38" ry="11" fill="#2A4548" />
+      <ellipse cx="126" cy="274" rx="22" ry="6" fill="#3E6464" opacity="0.7" />
+      <g fill="#F2C56E">
+        <ellipse cx="114" cy="272" rx="3.2" ry="2" />
+        <ellipse cx="126" cy="269" rx="3.4" ry="2" />
+        <ellipse cx="138" cy="273" rx="3" ry="1.8" />
+        <ellipse cx="130" cy="276" rx="2.4" ry="1.5" />
+      </g>
+
+      <g>
         <path
-          d="M52 91 C52 69 72 57 105 57 H153 C177 57 190 75 190 99 V119 H52 V91Z"
-          fill="#D9A441"
+          d="M176 176c-52-16-108 8-118 34 28 0 58 12 92 34 10-20 18-44 26-68Z"
+          fill="#F3E7D4"
         />
-  
-        {/* Neck */}
         <path
-          d="M155 75 Q172 60 188 73 L194 112 H161"
-          fill="#D9A441"
+          d="M186 230c4-62 78-96 146-74 36 12 62 8 78 28 6 34-14 62-40 74-62 28-156 16-184-28Z"
+          fill="#F6EFE2"
         />
-  
-        {/* Head */}
         <path
-          d="M177 65 C181 48 197 42 211 51 C226 60 226 81 213 91 C203 99 186 93 180 83"
-          fill="#D9A441"
+          className="crow-wing"
+          d="M236 196c36-28 96-18 128 14-36 4-78 26-118 16-8-8-12-18-10-30Z"
+          fill="#E4C48A"
         />
-  
-        {/* Horns */}
         <path
-          d="M190 53 Q179 36 174 27 M211 51 Q224 34 229 28"
-          stroke="#B85C38"
-          strokeWidth="4"
+          d="M248 214c22-8 48-2 62 14-28 8-52 6-70-6 0-4 2-6 8-8Z"
+          fill="#C9844A"
+          opacity="0.55"
+        />
+        <path
+          d="M392 168c28-22 70-10 76 18 4 22-14 38-38 40-26 2-48-12-52-32-2-12 4-20 14-26Z"
+          fill="#F6EFE2"
+        />
+        <path d="M462 186l68-10-64 24-4-14Z" fill="#E7A33E" />
+        <path d="M464 198l44 2-42 12Z" fill="#B85C38" />
+        <circle cx="430" cy="178" r="5" fill="#1A120E" />
+        <circle cx="432" cy="176.4" r="1.6" fill="#F2C56E" />
+        <path
+          d="M268 262l-4 30M304 266l6 28"
+          stroke="#C9844A"
+          strokeWidth="3.5"
           strokeLinecap="round"
         />
-  
-        {/* Ears */}
         <path
-          d="M181 65 Q163 49 159 62 Q166 75 183 76"
-          fill="#B85C38"
-        />
-  
-        {/* Muzzle */}
-        <ellipse cx="211" cy="83" rx="12" ry="9" fill="#B85C38" />
-  
-        {/* Eye */}
-        <circle cx="205" cy="64" r="3" fill="#B85C38" />
-  
-        {/* Legs */}
-        <path
-          d="M72 116 V148 M102 116 V148 M158 116 V148 M181 112 V148"
-          stroke="#D9A441"
-          strokeWidth="9"
+          d="M256 292h22M300 294h22"
+          stroke="#C9844A"
+          strokeWidth="2.5"
           strokeLinecap="round"
         />
-  
-        {/* Hooves */}
-        <path
-          d="M64 149 H80 M94 149 H110 M150 149 H166 M173 149 H189"
-          stroke="#B85C38"
-          strokeWidth="4"
-          strokeLinecap="round"
-        />
-  
-        {/* Tail */}
-        <path
-          d="M54 77 Q36 88 39 111 L30 119"
-          stroke="#D9A441"
-          strokeWidth="4"
-          strokeLinecap="round"
-        />
-      </svg>
-    );
-  }
-  
+      </g>
+    </svg>
+  );
+}

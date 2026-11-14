@@ -103,22 +103,29 @@ function Diya({
                     <stop offset="100%" stopColor="#F59A32" stopOpacity="0" />
                 </radialGradient>
 
-                {/* Soft blur */}
-                <filter id={`${uid}-blur`}>
-                    <feGaussianBlur stdDeviation="12" />
-                </filter>
             </defs>
 
             {/* Ground shadow */}
             <ellipse
                 cx="160"
-                cy="249"
-                rx="100"
-                ry="12"
+                cy="252"
+                rx="86"
+                ry="9"
                 fill="#000"
-                opacity=".35"
-                filter={`url(#${uid}-blur)`}
+                opacity=".28"
             />
+
+            {!lit && (
+                <ellipse
+                    cx="160"
+                    cy="150"
+                    rx="54"
+                    ry="70"
+                    fill={`url(#${uid}-glow)`}
+                    className="diya-hint-glow"
+                    opacity="0"
+                />
+            )}
 
             {/* Warm ambient illumination */}
             {lit && (

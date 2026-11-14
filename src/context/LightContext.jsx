@@ -1,12 +1,10 @@
-
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 const LightContext = createContext(null);
 
 export function LightProvider({ children }) {
   const [lit, setLit] = useState(false);
-
-  const light = () => setLit(true);
+  const light = useCallback(() => setLit(true), []);
 
   return (
     <LightContext.Provider value={{ lit, light }}>

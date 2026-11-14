@@ -77,39 +77,36 @@ const wishes = {
     ctx.fillStyle = diyaGlow;
     ctx.fillRect(290, 280, 500, 430);
   
-    // Diya flame using Path2D
     const flame = new Path2D(
-      "M 540 275 C 485 340 495 390 540 415 C 585 390 595 340 540 275 Z"
+      "M540 250 C500 310 492 360 528 400 C536 412 544 416 540 416 C536 416 544 412 552 400 C588 360 580 310 540 250 Z"
     );
-  
     ctx.fillStyle = "#E7A33E";
     ctx.fill(flame);
-  
+
     const innerFlame = new Path2D(
-      "M 540 330 C 515 365 522 390 540 400 C 558 390 565 365 540 330 Z"
+      "M540 318 C522 350 526 378 540 396 C554 378 558 350 540 318 Z"
     );
-  
-    ctx.fillStyle = "#F5EDDF";
+    ctx.fillStyle = "#FFF6D4";
     ctx.fill(innerFlame);
-  
-    // Diya bowl
+
     const bowl = new Path2D(
-      "M 400 440 Q 540 505 680 440 Q 660 565 540 575 Q 420 565 400 440 Z"
+      "M400 430 Q540 500 680 430 C664 545 590 575 540 578 C490 575 416 545 400 430 Z"
     );
-  
     ctx.fillStyle = "#B85C38";
     ctx.fill(bowl);
-  
-    ctx.strokeStyle = "#D9A441";
-    ctx.lineWidth = 5;
-    ctx.stroke(bowl);
-  
-    // Bowl highlight
+
     ctx.beginPath();
-    ctx.moveTo(430, 465);
-    ctx.quadraticCurveTo(540, 510, 650, 465);
+    ctx.moveTo(430, 448);
+    ctx.quadraticCurveTo(540, 498, 650, 448);
     ctx.strokeStyle = "#F2C56E";
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 5;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(470, 452);
+    ctx.quadraticCurveTo(530, 478, 575, 468);
+    ctx.strokeStyle = "rgba(255, 246, 212, 0.55)";
+    ctx.lineWidth = 3;
     ctx.stroke();
   
     // Decorative divider

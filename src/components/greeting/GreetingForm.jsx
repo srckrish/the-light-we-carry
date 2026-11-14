@@ -41,9 +41,9 @@ const wishes = [
             value={name}
             onChange={(event) => setName(event.target.value)}
             maxLength={24}
-            placeholder="Enter your name"
+            placeholder="Your name"
             autoComplete="given-name"
-            className="w-full rounded-lg border border-ivory/20 bg-ivory/5 px-4 py-3 text-ivory placeholder:text-ivory/35 outline-none transition-colors focus:border-diya-gold"
+            className="w-full border-b border-ivory/25 bg-transparent px-0 py-3 font-display text-3xl text-ivory outline-none transition-colors placeholder:text-ivory/30 focus:border-diya-gold"
           />
   
           <p className="text-right text-xs text-ivory/40">
