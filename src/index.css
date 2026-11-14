@@ -124,19 +124,8 @@
 
 
 /* =========================================
-   7. ACCESSIBILITY
+   7. HERO INTRO
 ========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  .diya-flame-flicker {
-    animation: none;
-  }
-}
-
 
 .intro-line {
   visibility: hidden;
@@ -178,8 +167,30 @@
 }
 
 
-/* Respect reduced-motion preferences */
+/* =========================================
+   9. CLOSING SCENE
+   Keep the final diya flame steady.
+========================================= */
+
+.closing-diya .diya-flame-flicker {
+  animation: none;
+}
+
+
+/* =========================================
+   10. ACCESSIBILITY
+   Respect reduced-motion preferences.
+========================================= */
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .diya-flame-flicker {
+    animation: none;
+  }
+
   .water-ripple {
     animation: none;
   }
