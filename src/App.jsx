@@ -1,14 +1,9 @@
-import { useState } from 'react'
+import HeroSection from "./sections/HeroSection";
 
-function App() {
-
+export default function App() {
   return (
-    <>
-      <section>
-        <div className="text-4xl font-bold"> hello world </div>
-      </section>
-    </>
-  )
+    <main>
+      <HeroSection />
+    </main>
+  );
 }
-
-export default App

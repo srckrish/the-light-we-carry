@@ -1,1 +1,143 @@
+
+/* =========================================
+   1. TAILWIND CSS
+========================================= */
+
 @import "tailwindcss";
+
+
+/* =========================================
+   2. THEME CONFIGURATION
+========================================= */
+
+@theme {
+  /* Colors */
+  --color-midnight: #11110F;
+  --color-ivory: #F5EDDF;
+  --color-diya-gold: #D9A441;
+  --color-marigold: #E7A33E;
+  --color-vermilion: #9F452A;
+  --color-terracotta: #B85C38;
+  --color-river: #416C70;
+  --color-sunset: #E88D45;
+  --color-sunrise: #F2C56E;
+  --color-night: #0F1B2A;
+
+  /* Fonts */
+  --font-display: "Cormorant Garamond", serif;
+  --font-body: "DM Sans", sans-serif;
+}
+
+
+/* =========================================
+   3. GLOBAL STYLES
+========================================= */
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-midnight text-ivory font-body;
+
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+  }
+
+  button {
+    font: inherit;
+    cursor: pointer;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::selection {
+    background-color: var(--color-diya-gold);
+    color: var(--color-midnight);
+  }
+}
+
+
+/* =========================================
+   4. DIYA FLAME
+   GSAP controls the outer group.
+========================================= */
+
+.diya-flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+}
+
+
+/* =========================================
+   5. DIYA FLAME FLICKER
+   CSS controls continuous movement.
+========================================= */
+
+.diya-flame-flicker {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flame-flicker 2.5s ease-in-out infinite;
+}
+
+@keyframes flame-flicker {
+  0%,
+  100% {
+    transform: scaleY(1) skewX(0deg);
+  }
+
+  25% {
+    transform: scaleY(1.025) skewX(-1.5deg);
+  }
+
+  50% {
+    transform: scaleY(0.98) skewX(1deg);
+  }
+
+  75% {
+    transform: scaleY(1.015) skewX(-0.8deg);
+  }
+}
+
+
+/* =========================================
+   6. DIYA GLOW
+   GSAP controls the glow.
+========================================= */
+
+.diya-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+
+/* =========================================
+   7. ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .diya-flame-flicker {
+    animation: none;
+  }
+}
+
+
+.intro-line {
+  visibility: hidden;
+}
