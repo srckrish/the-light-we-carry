@@ -8,7 +8,7 @@ import FootstepsGame from "../play/games/FootstepsGame";
 import { TIHAR_DAYS } from "../../data/festivalData";
 
 export default function HomeView() {
-  const { lit, playChimeNote, soundEnabled, toggleSound } = useLight();
+  const { lit, playChimeNote } = useLight();
   const [activeRitual, setActiveRitual] = useState("rangoli");
 
   return (
@@ -63,21 +63,6 @@ export default function HomeView() {
             Experience Tihar's sacred customs firsthand. Draw symmetry with hand-ground pigments, or memorize the path of golden lamps to guide Goddess Laxmi into the home.
           </p>
         </div>
-
-        {/* Subtle Sound pointer */}
-        {!soundEnabled && (
-          <div className="flex items-center justify-center gap-2 mb-6 text-xs text-stone-400 animate-fade-in">
-            <span className="text-amber-400">🔔</span>
-            <span>You can turn sound on from here:</span>
-            <button
-              type="button"
-              onClick={toggleSound}
-              className="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/35 hover:border-amber-400 text-amber-300 text-xs font-medium transition-all hover:scale-105 active:scale-95 shadow-[0_0_12px_rgba(245,158,11,0.2)]"
-            >
-              Turn on sound ↗
-            </button>
-          </div>
-        )}
 
         {/* Organized Ritual Tab Switcher: Rangoli First, Footsteps Second */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
@@ -190,9 +175,6 @@ export default function HomeView() {
         >
           Explore all games →
         </Link>
-        <p className="text-xs text-amber-300/60 font-light mt-3">
-          Tip: Turn on temple chimes for musical notes with every move.
-        </p>
       </section>
 
       {/* ─── 5. Footer ─── */}

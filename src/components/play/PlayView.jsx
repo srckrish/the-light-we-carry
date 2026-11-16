@@ -64,7 +64,7 @@ const ALL_GAMES = [
 export default function PlayView() {
   const { gameId } = useParams();
   const navigate = useNavigate();
-  const { playChimeNote, soundEnabled, toggleSound } = useLight();
+  const { playChimeNote } = useLight();
 
   // Listen to Escape key to exit game
   useEffect(() => {
@@ -121,7 +121,7 @@ export default function PlayView() {
                   <span className="text-stone-600">·</span>
                   <span>Meditative Art</span>
                   <span className="text-stone-600">·</span>
-                  <span className="text-amber-300">🎵 Powder Sketch Sound</span>
+                  <span className="text-amber-300">🎨 Hand-Ground Pigments</span>
                 </div>
               </div>
               <Link
@@ -156,7 +156,7 @@ export default function PlayView() {
                   <span className="text-stone-600">·</span>
                   <span>Simon-Style Memory</span>
                   <span className="text-stone-600">·</span>
-                  <span className="text-amber-300">🔔 Temple Bell Sound</span>
+                  <span className="text-amber-300">🪔 Golden Diya Lamps</span>
                 </div>
               </div>
               <Link
@@ -242,46 +242,11 @@ export default function PlayView() {
               </h2>
 
               <div className="flex items-center gap-2 sm:gap-3">
-                {!soundEnabled && (
-                  <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/15 border border-amber-400/40 text-[11px] text-amber-300 font-medium animate-pulse shadow-[0_0_12px_rgba(245,158,11,0.2)]">
-                    <span>You can turn sound on from here</span>
-                    <span>→</span>
-                  </div>
-                )}
-                {/* Sound toggle with subtle pulse if muted */}
-                <button
-                  type="button"
-                  onClick={toggleSound}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs transition-all border font-medium ${
-                    soundEnabled
-                      ? "bg-amber-500/15 border-amber-500/30 text-amber-300 hover:bg-amber-500/25 shadow-[0_0_12px_rgba(245,158,11,0.25)]"
-                      : "bg-amber-400 text-stone-950 border-amber-300 font-bold shadow-[0_0_20px_rgba(245,158,11,0.6)] ring-2 ring-amber-300 animate-pulse hover:scale-105 active:scale-95"
-                  }`}
-                  title={soundEnabled ? "Mute sound" : "Turn sound on"}
-                  aria-pressed={soundEnabled}
-                >
-                  <span className={soundEnabled ? "animate-pulse" : ""}>🔔</span>
-                  <span>{soundEnabled ? "Sound on" : "Sound off"}</span>
-                </button>
-                <span className="text-xs text-stone-500 hidden md:inline">
-                  Esc to exit
+                <span className="text-xs text-stone-400 font-light hidden sm:inline">
+                  Press Esc to exit
                 </span>
               </div>
             </div>
-
-            {/* Mobile subtle sound pointer */}
-            {!soundEnabled && (
-              <div className="sm:hidden mb-5 flex items-center justify-between px-3.5 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-[11px] text-amber-300 animate-fade-in">
-                <span>You can turn sound on from here:</span>
-                <button
-                  type="button"
-                  onClick={toggleSound}
-                  className="font-bold underline text-amber-200"
-                >
-                  Turn on ↗
-                </button>
-              </div>
-            )}
 
             {/* Active Game Component */}
             {ActiveGameComponent ? (
