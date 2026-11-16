@@ -3,6 +3,7 @@ import { useLight } from "../../context/LightContext";
 import CentralDiya from "../diya/CentralDiya";
 import IlluminatedVillage from "../scenic/IlluminatedVillage";
 import RangoliStudio from "../rangoli/RangoliStudio";
+import FootstepsGame from "../play/games/FootstepsGame";
 import { TIHAR_DAYS } from "../../data/festivalData";
 
 export default function HomeView() {
@@ -63,7 +64,28 @@ export default function HomeView() {
         <RangoliStudio isHero={true} />
       </section>
 
-      {/* ─── 3. Five Days timeline ─── */}
+      {/* ─── 3. Featured Ritual Game: Footsteps of Laxmi ─── */}
+      <section className="mt-20 sm:mt-28">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[11px] sm:text-xs font-semibold tracking-wider uppercase mb-2 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
+            <span>👑</span>
+            <span>Featured Sacred Ritual · लक्ष्मीको पाइला</span>
+          </div>
+          <h2 className="font-display font-semibold text-2xl sm:text-4xl text-ivory">
+            Footsteps of Laxmi
+          </h2>
+          <p className="text-sm text-stone-400 font-light mt-2 max-w-lg mx-auto">
+            On Laxmi Puja, red vermillion footprints guide the Goddess into welcoming homes.
+            Watch the sacred lamps illuminate in rhythm, remember the sequence, and guide her holy path inside.
+          </p>
+        </div>
+
+        <div className="max-w-2xl mx-auto p-6 sm:p-10 rounded-3xl bg-gradient-to-b from-stone-950/90 via-[#0D0A14]/90 to-stone-950/90 border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.15)] backdrop-blur-2xl">
+          <FootstepsGame />
+        </div>
+      </section>
+
+      {/* ─── 4. Five Days timeline ─── */}
       <section className="mt-20 sm:mt-28">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 pb-2 border-b border-amber-500/15 gap-2">
           <div>
