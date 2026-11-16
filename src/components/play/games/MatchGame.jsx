@@ -19,7 +19,7 @@ export default function MatchGame() {
   const [moves, setMoves] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
 
-  const { releaseLantern, playChimeNote, showToast } = useLight();
+  const { releaseLantern, playCardFlip, playCardMatch, showToast } = useLight();
 
   const initGame = () => {
     setCards(shuffleCards());
@@ -37,7 +37,7 @@ export default function MatchGame() {
     if (isLocked) return;
     if (flipped.includes(idx) || matched.includes(idx)) return;
 
-    playChimeNote(idx % 6);
+    playCardFlip();
     const newFlipped = [...flipped, idx];
     setFlipped(newFlipped);
 
@@ -52,7 +52,7 @@ export default function MatchGame() {
           setMatched(newMatched);
           setFlipped([]);
           setIsLocked(false);
-          playChimeNote(5);
+          playCardMatch(true);
 
           if (newMatched.length === cards.length) {
             showToast(`All pairs matched in ${moves + 1} moves! Double lights released.`);
@@ -71,6 +71,7 @@ export default function MatchGame() {
         setTimeout(() => {
           setFlipped([]);
           setIsLocked(false);
+          playCardMatch(false);
         }, 850);
       }
     }

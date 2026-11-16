@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLight } from "../../context/LightContext";
 import CentralDiya from "../diya/CentralDiya";
@@ -7,7 +8,8 @@ import FootstepsGame from "../play/games/FootstepsGame";
 import { TIHAR_DAYS } from "../../data/festivalData";
 
 export default function HomeView() {
-  const { lit, playChimeNote } = useLight();
+  const { lit, playChimeNote, soundEnabled, toggleSound } = useLight();
+  const [activeRitual, setActiveRitual] = useState("rangoli");
 
   return (
     <div className="relative z-10 min-h-screen pt-20 pb-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
@@ -47,45 +49,84 @@ export default function HomeView() {
         </div>
       </section>
 
-      {/* ─── 2. Rangoli Studio (hero placement) ─── */}
+      {/* ─── 2. Interactive Rituals Pavilion (Featured Games) ─── */}
       <section className="mt-16 sm:mt-24">
         <div className="text-center mb-6">
-          <p className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-amber-400 mb-1">
-            Interactive Art
-          </p>
-          <h2 className="font-display font-semibold text-2xl sm:text-3xl text-ivory">
-            Create Your Sacred Rangoli
-          </h2>
-          <p className="text-sm text-stone-400 font-light mt-2 max-w-md mx-auto">
-            Draw with 16-axis symmetry. Pick a color, choose a motif, and make
-            it glow.
-          </p>
-        </div>
-        <RangoliStudio isHero={true} />
-      </section>
-
-      {/* ─── 3. Featured Ritual Game: Footsteps of Laxmi ─── */}
-      <section className="mt-20 sm:mt-28">
-        <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[11px] sm:text-xs font-semibold tracking-wider uppercase mb-2 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
             <span>👑</span>
-            <span>Featured Sacred Ritual · लक्ष्मीको पाइला</span>
+            <span>Featured Sacred Traditions · अन्तरक्रियात्मक परम्पराहरू</span>
           </div>
           <h2 className="font-display font-semibold text-2xl sm:text-4xl text-ivory">
-            Footsteps of Laxmi
+            Rituals of Hands &amp; Light
           </h2>
           <p className="text-sm text-stone-400 font-light mt-2 max-w-lg mx-auto">
-            On Laxmi Puja, red vermillion footprints guide the Goddess into welcoming homes.
-            Watch the sacred lamps illuminate in rhythm, remember the sequence, and guide her holy path inside.
+            Experience Tihar's sacred customs firsthand. Draw symmetry with hand-ground pigments, or memorize the path of golden lamps to guide Goddess Laxmi into the home.
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto p-6 sm:p-10 rounded-3xl bg-gradient-to-b from-stone-950/90 via-[#0D0A14]/90 to-stone-950/90 border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.15)] backdrop-blur-2xl">
-          <FootstepsGame />
+        {/* Subtle Sound pointer */}
+        {!soundEnabled && (
+          <div className="flex items-center justify-center gap-2 mb-6 text-xs text-stone-400 animate-fade-in">
+            <span className="text-amber-400">🔔</span>
+            <span>You can turn sound on from here:</span>
+            <button
+              type="button"
+              onClick={toggleSound}
+              className="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/35 hover:border-amber-400 text-amber-300 text-xs font-medium transition-all hover:scale-105 active:scale-95 shadow-[0_0_12px_rgba(245,158,11,0.2)]"
+            >
+              Turn on sound ↗
+            </button>
+          </div>
+        )}
+
+        {/* Organized Ritual Tab Switcher: Rangoli First, Footsteps Second */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+          <button
+            type="button"
+            onClick={() => {
+              setActiveRitual("rangoli");
+              playChimeNote(2);
+            }}
+            className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide transition-all duration-300 flex items-center gap-2 active:scale-95 border ${
+              activeRitual === "rangoli"
+                ? "bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 border-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.5)] scale-105"
+                : "bg-stone-950/70 border-amber-500/20 text-stone-300 hover:text-amber-200 hover:border-amber-400/40"
+            }`}
+          >
+            <span>🎨</span>
+            <span>Sacred Rangoli Studio</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setActiveRitual("steps");
+              playChimeNote(1);
+            }}
+            className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide transition-all duration-300 flex items-center gap-2 active:scale-95 border ${
+              activeRitual === "steps"
+                ? "bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 border-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.5)] scale-105"
+                : "bg-stone-950/70 border-amber-500/20 text-stone-300 hover:text-amber-200 hover:border-amber-400/40"
+            }`}
+          >
+            <span>🪔</span>
+            <span>Footsteps of Laxmi (Memory Path)</span>
+          </button>
         </div>
+
+        {/* Selected Interactive Experience: Rangoli First */}
+        {activeRitual === "rangoli" ? (
+          <div className="animate-fade-in">
+            <RangoliStudio isHero={true} />
+          </div>
+        ) : (
+          <div className="max-w-2xl mx-auto p-6 sm:p-10 rounded-3xl bg-gradient-to-b from-stone-950/90 via-[#0D0A14]/90 to-stone-950/90 border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.15)] backdrop-blur-2xl animate-fade-in">
+            <FootstepsGame />
+          </div>
+        )}
       </section>
 
-      {/* ─── 4. Five Days timeline ─── */}
+      {/* ─── 3. Five Days timeline ─── */}
       <section className="mt-20 sm:mt-28">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 pb-2 border-b border-amber-500/15 gap-2">
           <div>

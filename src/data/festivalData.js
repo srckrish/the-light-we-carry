@@ -120,10 +120,56 @@ export const CONSTELLATIONS = [
   ]
 ];
 
+export const CHHATH_RITUAL_STAGES = [
+  {
+    day: "Day 1",
+    name: "Nahay-Khay",
+    devanagari: "नहाय-खाय",
+    tagline: "Sanctification & Pure Feast",
+    desc: "Devotees take a holy purification dip in the sacred river and prepare a pure satvik meal of rice and pumpkin cooked in brass or clay vessels.",
+  },
+  {
+    day: "Day 2",
+    name: "Kharna",
+    devanagari: "खरना",
+    tagline: "Sacred Fast & Rasiyaw",
+    desc: "A day-long nirjala (waterless) fast. After sundown, prayer offerings of jaggery kheer (Rasiyaw) and fresh rotis are made before the 36-hour vigil begins.",
+  },
+  {
+    day: "Day 3",
+    name: "Sandhya Arghya",
+    devanagari: "सन्ध्या अर्घ्य",
+    tagline: "Offering to the Setting Sun",
+    desc: "Devotees stand waist-deep in river waters, holding bamboo soop trays laden with thekua, sugarcane, and fruits to honor the setting sun (Astachalgami Surya).",
+  },
+  {
+    day: "Day 4",
+    name: "Usha Arghya",
+    devanagari: "उषा अर्घ्य / पारन",
+    tagline: "Dawn Offering & Blessing",
+    desc: "Before dawn, prayers welcome the rising sun (Udayagami Surya) with Arghya of milk and holy water, completing the fast and sharing sacred prasad.",
+  },
+];
+
 export const CHHATH_CAPTION_STEPS = [
-  "At the water's edge, offerings of Arghya are made to the setting sun (Sandhya Arghya).",
-  "Lamps glow softly along the sacred riverbanks through the night of prayer and vigilance.",
-  "At dawn, prayers welcome the rising sun (Usha Arghya), and the entire river turns to gold."
+  {
+    phase: "sunset",
+    title: "Sandhya Arghya · The Setting Sun",
+    time: "Sunset Twilight (सन्ध्या अर्घ्य)",
+    desc: "Uniquely, Chhath begins by honouring the setting sun. Devotees stand waist-deep in river waters, raising bamboo soop baskets filled with thekua, bananas, and sugarcane in gratitude for the cycle of life.",
+  },
+  {
+    phase: "night",
+    title: "Kosiya Bharai · The Night Vigil",
+    time: "Midnight River Vigil (कोसिया भराई)",
+    desc: "Through the quiet night, terracotta canopies of clay diyas glow along the riverbanks. Families keep vigil singing traditional folk hymns to Chhathi Maiya under a celestial night sky.",
+  },
+  {
+    phase: "sunrise",
+    title: "Usha Arghya · The Dawn Rebirth",
+    time: "Dawn Awakening (उषा अर्घ्य)",
+    desc: "At sunrise, golden light bathes the river. Devotees pour arghya of milk and water toward the rising sun, joyfully completing their 36-hour fast and distributing blessed thekua to all.",
+  },
 ];
 
 export const QUIZ_QUESTIONS = [

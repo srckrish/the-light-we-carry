@@ -8,7 +8,7 @@ export default function CatchGame() {
   const [timeLeft, setTimeLeft] = useState(20);
   const [gameOver, setGameOver] = useState(false);
 
-  const { releaseLantern, playChimeNote, showToast } = useLight();
+  const { releaseLantern, playCatch, showToast } = useLight();
   const intervalRef = useRef(null);
   const timerRef = useRef(null);
 
@@ -71,7 +71,7 @@ export default function CatchGame() {
       const nextScore = score + 1;
       setScore(nextScore);
       setActiveLamp(-1);
-      playChimeNote(nextScore % 6);
+      playCatch(nextScore);
     }
   };
 

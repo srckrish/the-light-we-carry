@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useLight } from "../../context/LightContext";
 import RangoliGame from "./games/RangoliGame";
@@ -10,6 +10,15 @@ import WishCardGame from "./games/WishCardGame";
 
 const ALL_GAMES = [
   {
+    id: "rangoli",
+    name: "Sacred Rangoli Studio",
+    desc: "Draw symmetrical sacred patterns with 16-axis radial symmetry using hand-ground festival pigments.",
+    icon: "🎨",
+    tag: "Creative Art",
+    isFeatured: true,
+    component: RangoliGame,
+  },
+  {
     id: "steps",
     name: "Footsteps of Laxmi",
     desc: "Repeat the glowing lamp path as Goddess Laxmi is welcomed into homes. A Simon-style memory ritual.",
@@ -17,14 +26,6 @@ const ALL_GAMES = [
     tag: "Memory Path",
     isFeatured: true,
     component: FootstepsGame,
-  },
-  {
-    id: "rangoli",
-    name: "Rangoli Studio",
-    desc: "Draw a mirrored rosette pattern with 8-fold radial symmetry and sacred colors.",
-    icon: "🎨",
-    tag: "Creative Art",
-    component: RangoliGame,
   },
   {
     id: "quiz",
@@ -60,54 +61,10 @@ const ALL_GAMES = [
   },
 ];
 
-const GAME_SOUND_TIPS = {
-  steps: {
-    highlight: "Sacred Footstep Bells",
-    tip: "Each holy lamp sounds a melodic chime note. Turn on chimes to hear and memorize the musical path of Goddess Laxmi!",
-    emoji: "👣",
-  },
-  rangoli: {
-    highlight: "Singing Mandala",
-    tip: "Every stroke and symmetry ray rings with a harmonic chord. Turn on chimes to hear your rangoli come to life!",
-    emoji: "🎨",
-  },
-  match: {
-    highlight: "Festive Harmony",
-    tip: "Card flips and matches trigger joyful temple bells. Turn on chimes for melodic feedback on every match!",
-    emoji: "🃏",
-  },
-  quiz: {
-    highlight: "Wisdom Gongs",
-    tip: "Ceremonial bells celebrate your cultural knowledge. Turn on chimes for the full festive trivia atmosphere!",
-    emoji: "❓",
-  },
-  catch: {
-    highlight: "Courtyard Bells",
-    tip: "Rapid temple bells echo as you illuminate lamps in the dark. Turn on chimes for rhythmic reflex play!",
-    emoji: "✨",
-  },
-  card: {
-    highlight: "Ambient Chimes",
-    tip: "Compose and decorate your blessings accompanied by gentle, soothing festival bells. Turn on chimes!",
-    emoji: "💌",
-  },
-};
-
 export default function PlayView() {
   const { gameId } = useParams();
   const navigate = useNavigate();
   const { playChimeNote, soundEnabled, toggleSound } = useLight();
-  const [spotlightDismissed, setSpotlightDismissed] = useState(false);
-  const [timedOut, setTimedOut] = useState(false);
-
-  // Auto-hide spotlight cue after 7.5 seconds
-  useEffect(() => {
-    if (!gameId || soundEnabled) return;
-    const timer = setTimeout(() => {
-      setTimedOut(true);
-    }, 7500);
-    return () => clearTimeout(timer);
-  }, [gameId, soundEnabled]);
 
   // Listen to Escape key to exit game
   useEffect(() => {
@@ -122,8 +79,6 @@ export default function PlayView() {
 
   const activeGameObj = ALL_GAMES.find((g) => g.id === gameId);
   const ActiveGameComponent = activeGameObj ? activeGameObj.component : null;
-  const currentTip = gameId ? GAME_SOUND_TIPS[gameId] || GAME_SOUND_TIPS.steps : null;
-  const spotlightVisible = Boolean(gameId && !soundEnabled && !spotlightDismissed && !timedOut);
 
   return (
     <div className="relative z-10 min-h-screen pt-20 pb-28 px-4 sm:px-6 max-w-5xl mx-auto flex flex-col justify-between">
@@ -142,58 +97,82 @@ export default function PlayView() {
             </p>
           </div>
 
-          {/* ─── Featured Ritual Showcase: Footsteps of Laxmi ─── */}
-          <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-amber-500/20 via-stone-950/90 to-amber-950/40 border-2 border-amber-500/50 shadow-[0_0_50px_rgba(245,158,11,0.22)] backdrop-blur-2xl mb-10 overflow-hidden group">
-            <div className="absolute -top-24 -right-24 w-72 h-72 bg-amber-500/15 rounded-full blur-3xl pointer-events-none group-hover:bg-amber-500/25 transition-all duration-700" />
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div className="text-left max-w-xl">
+          {/* ─── Dual Featured Ritual Showcase ─── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+            {/* Featured Card 1: Sacred Rangoli Studio */}
+            <div className="relative p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-rose-500/15 via-stone-950/90 to-purple-950/30 border-2 border-rose-500/40 shadow-[0_0_40px_rgba(225,29,72,0.15)] backdrop-blur-2xl overflow-hidden group flex flex-col justify-between gap-5">
+              <div className="absolute -top-20 -left-20 w-56 h-56 bg-rose-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-rose-500/20 transition-all duration-700" />
+              <div className="relative z-10">
                 <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <span className="px-3 py-1 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 text-[11px] font-bold tracking-wider uppercase shadow-[0_0_12px_rgba(245,158,11,0.5)] flex items-center gap-1.5">
+                  <span className="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-rose-400 to-amber-400 text-stone-950 text-[10px] font-bold tracking-wider uppercase shadow-[0_0_10px_rgba(225,29,72,0.4)] flex items-center gap-1">
                     <span>👑</span>
-                    <span>Featured Festival Ritual</span>
+                    <span>Featured Creative Ritual</span>
+                  </span>
+                  <span className="text-xs text-rose-300 font-devanagari">सयपत्री मण्डल</span>
+                </div>
+                <h3 className="font-display font-semibold text-2xl sm:text-3xl text-ivory group-hover:text-rose-200 transition-colors">
+                  🎨 Sacred Rangoli Studio
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-300 font-light mt-2 leading-relaxed">
+                  Draw with hand-ground pigments across 16-axis sacred symmetry. Every stroke blooms into a festival mandala.
+                </p>
+                <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-rose-500/15 text-xs text-rose-400/80">
+                  <span>✦ 16-Axis Symmetry</span>
+                  <span className="text-stone-600">·</span>
+                  <span>Meditative Art</span>
+                  <span className="text-stone-600">·</span>
+                  <span className="text-amber-300">🎵 Powder Sketch Sound</span>
+                </div>
+              </div>
+              <Link
+                to="/play/rangoli"
+                onClick={() => playChimeNote(3)}
+                className="relative z-10 w-full text-center px-6 py-3 rounded-full bg-gradient-to-r from-rose-500 via-rose-400 to-amber-500 text-stone-950 font-semibold text-sm tracking-wide shadow-[0_0_20px_rgba(225,29,72,0.35)] hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center gap-2"
+              >
+                <span>Create Rangoli</span>
+                <span>→</span>
+              </Link>
+            </div>
+
+            {/* Featured Card 2: Footsteps of Laxmi */}
+            <div className="relative p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-amber-500/20 via-stone-950/90 to-amber-950/40 border-2 border-amber-500/50 shadow-[0_0_40px_rgba(245,158,11,0.2)] backdrop-blur-2xl overflow-hidden group flex flex-col justify-between gap-5">
+              <div className="absolute -top-20 -right-20 w-56 h-56 bg-amber-500/15 rounded-full blur-3xl pointer-events-none group-hover:bg-amber-500/25 transition-all duration-700" />
+              <div className="relative z-10">
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <span className="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 text-[10px] font-bold tracking-wider uppercase shadow-[0_0_10px_rgba(245,158,11,0.5)] flex items-center gap-1">
+                    <span>👑</span>
+                    <span>Featured Memory Ritual</span>
                   </span>
                   <span className="text-xs text-amber-300 font-devanagari">लक्ष्मीको पाइला</span>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-500/25 font-medium">
-                    Community Favorite ★★★★★
-                  </span>
                 </div>
-
                 <h3 className="font-display font-semibold text-2xl sm:text-3xl text-ivory group-hover:text-amber-200 transition-colors">
-                  Footsteps of Laxmi
+                  🪔 Footsteps of Laxmi
                 </h3>
-
                 <p className="text-xs sm:text-sm text-stone-300 font-light mt-2 leading-relaxed">
-                  On Laxmi Puja, sacred vermillion footprints guide Goddess Laxmi inside. Memorize the glowing oil diyas and repeat her sacred path to welcome prosperity into your home.
+                  Memorize the glowing lamp sequence and repeat her sacred path. Each step brings Goddess Laxmi closer to home.
                 </p>
-
-                <div className="flex flex-wrap items-center gap-3 mt-4 pt-3 border-t border-amber-500/15 text-xs text-amber-400/90">
-                  <span className="flex items-center gap-1">
-                    <span className="text-base">👣</span> 8 Sacred Steps
-                  </span>
+                <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-amber-500/15 text-xs text-amber-400/80">
+                  <span>👣 8 Sacred Steps</span>
                   <span className="text-stone-600">·</span>
-                  <span>Simon-Style Lamp Memory</span>
+                  <span>Simon-Style Memory</span>
                   <span className="text-stone-600">·</span>
-                  <span className="text-amber-300">Resonant Chimes</span>
+                  <span className="text-amber-300">🔔 Temple Bell Sound</span>
                 </div>
               </div>
-
-              <div className="shrink-0 flex flex-col items-center gap-2 w-full md:w-auto">
-                <Link
-                  to="/play/steps"
-                  onClick={() => playChimeNote(2)}
-                  className="w-full md:w-auto text-center px-8 py-3.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 text-stone-950 font-semibold text-sm tracking-wide shadow-[0_0_25px_rgba(245,158,11,0.45)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
-                >
-                  <span>Play Footsteps of Laxmi</span>
-                  <span className="text-base">→</span>
-                </Link>
-                <span className="text-[11px] text-stone-400 font-light">Interactive ritual challenge</span>
-              </div>
+              <Link
+                to="/play/steps"
+                onClick={() => playChimeNote(2)}
+                className="relative z-10 w-full text-center px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 text-stone-950 font-semibold text-sm tracking-wide shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center gap-2"
+              >
+                <span>Play Footsteps of Laxmi</span>
+                <span>→</span>
+              </Link>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {ALL_GAMES.map((game) => {
-              const isHighlight = game.id === "steps";
+              const isHighlight = game.isFeatured;
               return (
                 <Link
                   key={game.id}
@@ -255,7 +234,7 @@ export default function PlayView() {
               <h2 className="font-display font-semibold text-xl sm:text-2xl text-ivory flex items-center gap-2">
                 <span>{activeGameObj?.icon}</span>
                 <span>{activeGameObj?.name}</span>
-                {activeGameObj?.id === "steps" && (
+                {activeGameObj?.isFeatured && (
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 uppercase tracking-widest font-bold">
                     Featured
                   </span>
@@ -263,22 +242,26 @@ export default function PlayView() {
               </h2>
 
               <div className="flex items-center gap-2 sm:gap-3">
-                {/* Chimes toggle with spotlight pulse if muted */}
+                {!soundEnabled && (
+                  <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/15 border border-amber-400/40 text-[11px] text-amber-300 font-medium animate-pulse shadow-[0_0_12px_rgba(245,158,11,0.2)]">
+                    <span>You can turn sound on from here</span>
+                    <span>→</span>
+                  </div>
+                )}
+                {/* Sound toggle with subtle pulse if muted */}
                 <button
                   type="button"
                   onClick={toggleSound}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs transition-all border font-medium ${
                     soundEnabled
                       ? "bg-amber-500/15 border-amber-500/30 text-amber-300 hover:bg-amber-500/25 shadow-[0_0_12px_rgba(245,158,11,0.25)]"
-                      : spotlightVisible
-                      ? "bg-amber-400 text-stone-950 border-amber-300 font-bold shadow-[0_0_20px_rgba(245,158,11,0.7)] animate-pulse scale-105 ring-2 ring-amber-300"
-                      : "bg-stone-900/90 border-stone-700/60 text-stone-400 hover:text-amber-300 hover:border-amber-400/40"
+                      : "bg-amber-400 text-stone-950 border-amber-300 font-bold shadow-[0_0_20px_rgba(245,158,11,0.6)] ring-2 ring-amber-300 animate-pulse hover:scale-105 active:scale-95"
                   }`}
-                  title={soundEnabled ? "Mute temple chimes" : "Turn temple chimes on"}
+                  title={soundEnabled ? "Mute sound" : "Turn sound on"}
                   aria-pressed={soundEnabled}
                 >
                   <span className={soundEnabled ? "animate-pulse" : ""}>🔔</span>
-                  <span>{soundEnabled ? "Chimes on" : "Chimes off"}</span>
+                  <span>{soundEnabled ? "Sound on" : "Sound off"}</span>
                 </button>
                 <span className="text-xs text-stone-500 hidden md:inline">
                   Esc to exit
@@ -286,52 +269,17 @@ export default function PlayView() {
               </div>
             </div>
 
-            {/* Dynamic Game-Specific Spotlight Recommendation */}
-            {!soundEnabled && spotlightVisible && currentTip && (
-              <div className="relative mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-500/20 via-amber-950/40 to-amber-500/20 border-2 border-amber-400/50 shadow-[0_0_35px_rgba(245,158,11,0.25)] backdrop-blur-xl animate-fade-in text-left">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-amber-400 text-stone-950 flex items-center justify-center font-bold text-lg shrink-0 shadow-[0_0_15px_rgba(245,158,11,0.6)] animate-bounce">
-                      {currentTip.emoji}
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
-                          Recommended: {currentTip.highlight}
-                        </span>
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-200 border border-amber-400/30 font-medium">
-                          Turn on above ↗
-                        </span>
-                      </div>
-                      <p className="text-xs text-stone-200 font-light mt-0.5 leading-relaxed">
-                        {currentTip.tip}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        toggleSound();
-                        setSpotlightDismissed(true);
-                      }}
-                      className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-bold text-xs tracking-wide hover:scale-105 active:scale-95 transition-all shadow-[0_0_15px_rgba(245,158,11,0.4)] flex items-center gap-1.5"
-                    >
-                      <span>Turn Chimes On</span>
-                      <span>🔔</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSpotlightDismissed(true)}
-                      className="p-1.5 text-stone-400 hover:text-stone-200 text-xs rounded-full hover:bg-stone-800/50 transition-colors"
-                      aria-label="Dismiss sound tip"
-                      title="Dismiss"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                </div>
+            {/* Mobile subtle sound pointer */}
+            {!soundEnabled && (
+              <div className="sm:hidden mb-5 flex items-center justify-between px-3.5 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-[11px] text-amber-300 animate-fade-in">
+                <span>You can turn sound on from here:</span>
+                <button
+                  type="button"
+                  onClick={toggleSound}
+                  className="font-bold underline text-amber-200"
+                >
+                  Turn on ↗
+                </button>
               </div>
             )}
 

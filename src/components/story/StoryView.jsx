@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useLight } from "../../context/LightContext";
-import { TIHAR_DAYS, CHHATH_CAPTION_STEPS } from "../../data/festivalData";
+import { TIHAR_DAYS, CHHATH_CAPTION_STEPS, CHHATH_RITUAL_STAGES } from "../../data/festivalData";
 
 // Cultural illustrations for each day
 import Crow from "../svg/Crow";
@@ -9,6 +9,7 @@ import Dog from "../svg/Dog";
 import Cow from "../svg/Cow";
 import Ox from "../svg/Ox";
 import TikaPlate from "../svg/TikaPlate";
+import ChhathSoop from "../svg/ChhathSoop";
 
 export default function StoryView({ chhathSlider, setChhathSlider }) {
   const { dayId } = useParams();
@@ -94,6 +95,8 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
         return <Ox className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]" />;
       case 4:
         return <TikaPlate className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]" />;
+      case 5:
+        return <ChhathSoop className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]" />;
       default:
         return null;
     }
@@ -205,65 +208,145 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
               </div>
             </div>
           ) : (
-            /* Day 6: Chhath Puja with Interactive River Sun Scrubber */
-            <div className="space-y-6 text-left">
-              <div className="flex items-center justify-between border-b border-amber-500/15 pb-3">
-                <span className="text-xs font-semibold tracking-[0.25em] uppercase text-teal-400 flex items-center gap-2">
-                  <span>🌅</span>
-                  <span>Chhath Puja · <strong className="font-devanagari font-normal">छठ पूजा</strong></span>
-                </span>
-                <span className="text-xs font-medium px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/25">
-                  {chhathSlider < 0.34
-                    ? "Sandhya Arghya (Sunset)"
-                    : chhathSlider < 0.67
-                    ? "Night Vigil"
-                    : "Usha Arghya (Sunrise)"}
-                </span>
-              </div>
-
-              <div>
-                <h2 className="font-display font-semibold text-3xl sm:text-5xl text-ivory tracking-tight leading-tight">
-                  Light Meets the Holy River
-                </h2>
-                <p className="text-sm sm:text-base text-stone-200 mt-2 font-light leading-relaxed min-h-[3rem]">
-                  {getChhathCaption()}
-                </p>
-              </div>
-
-              {/* Interactive Time of Day Scrubber */}
-              <div className="p-5 rounded-2xl bg-amber-950/25 border border-amber-500/20 space-y-3">
-                <div className="flex justify-between items-center text-xs font-medium">
-                  <span className="text-stone-300">Drag to transition between sunset, night, and sunrise:</span>
-                  <span className="text-amber-400 font-semibold">{Math.round(chhathSlider * 100)}%</span>
+            /* Day 6: Chhath Puja - Comprehensive Cultural & Interactive Experience */
+            <div className="space-y-8 text-left">
+              {/* Header Bar */}
+              <div className="flex flex-wrap items-center justify-between border-b border-amber-500/15 pb-4 gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">🌅</span>
+                  <span className="text-xs font-semibold tracking-[0.25em] uppercase text-amber-400">
+                    Grand Sacred Epilogue · Tihar &amp; Chhath
+                  </span>
                 </div>
-
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={chhathSlider}
-                  onChange={(e) => setChhathSlider(parseFloat(e.target.value))}
-                  className="w-full h-2.5 rounded-lg bg-stone-900 accent-amber-400 cursor-pointer appearance-none outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-                  aria-label="Chhath time of day from sunset to sunrise"
-                />
-
-                <div className="flex justify-between text-[11px] font-semibold tracking-wider uppercase text-stone-400 pt-1">
-                  <span className={chhathSlider < 0.34 ? "text-amber-400 font-bold" : ""}>
-                    1. Sandhya (Sunset)
-                  </span>
-                  <span className={chhathSlider >= 0.34 && chhathSlider < 0.67 ? "text-amber-400 font-bold" : ""}>
-                    2. Night Prayer
-                  </span>
-                  <span className={chhathSlider >= 0.67 ? "text-amber-400 font-bold" : ""}>
-                    3. Usha (Sunrise)
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-amber-300 font-devanagari">छठ पूजा</span>
+                  <span className="text-[11px] font-medium px-3 py-0.5 rounded-full bg-teal-500/15 text-teal-300 border border-teal-500/30">
+                    {getChhathCaption().time}
                   </span>
                 </div>
               </div>
 
-              <p className="text-xs text-stone-400 leading-relaxed font-light">
-                Devotees stand waist-deep in the river, lifting bamboo soop baskets filled with fruits and thekua to Surya and Chhathi Maiya. Look at the living river canvas in the background reflecting the moving sun!
-              </p>
+              {/* Two Column Showcase: Artwork + Solar River Scrubber | Cultural Story */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                {/* Visual Column */}
+                <div className="md:col-span-5 flex flex-col items-center justify-center p-6 rounded-3xl bg-gradient-to-b from-teal-950/30 via-stone-950/80 to-amber-950/30 border border-amber-500/20 shadow-inner">
+                  {renderDayArtwork()}
+                  <div className="mt-3 flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/25 text-amber-300 text-xs font-medium">
+                    <span>🌅</span>
+                    <span>Surya, Chhathi Maiya &amp; Holy Waters</span>
+                  </div>
+
+                  {/* Quick Stage Quick-Buttons */}
+                  <div className="w-full grid grid-cols-3 gap-1.5 mt-4 pt-3 border-t border-amber-500/15 text-[10px]">
+                    {[
+                      { label: "1. Sunset", val: 0.15 },
+                      { label: "2. Night", val: 0.5 },
+                      { label: "3. Sunrise", val: 0.85 },
+                    ].map((st) => (
+                      <button
+                        key={st.label}
+                        type="button"
+                        onClick={() => {
+                          setChhathSlider(st.val);
+                          playChimeNote(Math.round(st.val * 5));
+                        }}
+                        className={`py-1 px-1.5 rounded-lg border transition-all text-center ${
+                          (st.val === 0.15 && chhathSlider < 0.34) ||
+                          (st.val === 0.5 && chhathSlider >= 0.34 && chhathSlider < 0.67) ||
+                          (st.val === 0.85 && chhathSlider >= 0.67)
+                            ? "bg-amber-400 text-stone-950 border-amber-300 font-bold shadow-md"
+                            : "bg-stone-900/80 border-stone-800 text-stone-400 hover:text-amber-200"
+                        }`}
+                      >
+                        {st.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Narrative & Active Stage Column */}
+                <div className="md:col-span-7 space-y-4">
+                  <h2 className="font-display font-semibold text-3xl sm:text-4xl text-ivory tracking-tight leading-tight">
+                    {getChhathCaption().title}
+                  </h2>
+
+                  <p className="text-xs sm:text-sm text-stone-200 leading-relaxed font-light">
+                    {getChhathCaption().desc}
+                  </p>
+
+                  <p className="text-xs text-stone-400 leading-relaxed font-light pt-2 border-t border-amber-500/10">
+                    Unlike other festivals that worship only the rising sun, Chhath begins with profound reverence for the setting sun—honoring natural completion, endurance, and eternal return.
+                  </p>
+
+                  {/* Scrubber slider */}
+                  <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/20 space-y-2">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-stone-300 font-medium">Glide sun across river sky:</span>
+                      <span className="text-amber-400 font-mono text-[11px]">{Math.round(chhathSlider * 100)}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      value={chhathSlider}
+                      onChange={(e) => setChhathSlider(parseFloat(e.target.value))}
+                      className="w-full h-2 rounded-lg bg-stone-900 accent-amber-400 cursor-pointer appearance-none outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                      aria-label="Chhath time of day from sunset to sunrise"
+                    />
+                  </div>
+
+                  {/* Ritual Action Button */}
+                  <div className="pt-1 flex flex-wrap items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={handleRitualClick}
+                      disabled={ritualDone}
+                      className={`px-7 py-3 rounded-full font-semibold text-xs sm:text-sm tracking-wide transition-all flex items-center gap-2 ${
+                        ritualDone
+                          ? "bg-amber-900/40 text-amber-300/70 cursor-default border border-amber-500/25"
+                          : "bg-gradient-to-r from-amber-500 via-amber-400 to-teal-500 hover:from-amber-400 hover:to-teal-400 text-stone-950 shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:scale-105 active:scale-95"
+                      }`}
+                    >
+                      <span>🌅</span>
+                      <span>{ritualDone ? "Arghya offered ✦" : "Offer Arghya to Surya"}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Four Sacred Days of Chhath Guide */}
+              <div className="pt-4 border-t border-amber-500/15">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-xs font-semibold tracking-wider uppercase text-amber-400">
+                    The 4 Sacred Days of Chhath · चार दिनको महाअनुष्ठान
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {CHHATH_RITUAL_STAGES.map((stage) => (
+                    <div
+                      key={stage.name}
+                      className="p-3.5 rounded-2xl bg-stone-950/60 border border-amber-500/15 hover:border-amber-400/40 transition-colors flex flex-col justify-between text-left"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between text-[10px] text-amber-400/90 font-mono uppercase tracking-wider mb-1">
+                          <span>{stage.day}</span>
+                          <span className="font-devanagari text-xs text-amber-300/80">{stage.devanagari}</span>
+                        </div>
+                        <h4 className="font-display font-semibold text-sm text-ivory">
+                          {stage.name}
+                        </h4>
+                        <p className="text-[11px] text-amber-300/80 font-light mt-0.5">
+                          {stage.tagline}
+                        </p>
+                        <p className="text-[11px] text-stone-400 font-light mt-2 leading-relaxed">
+                          {stage.desc}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 

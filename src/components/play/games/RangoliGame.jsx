@@ -96,10 +96,12 @@ export default function RangoliGame() {
 
     // Redraw all strokes
     for (const stroke of history) {
+      if (!stroke || !stroke.points || stroke.points.length === 0) continue;
       for (let i = 1; i < stroke.points.length; i++) {
+        if (!stroke.points[i - 1] || !stroke.points[i]) continue;
         drawSegment(ctx, stroke.points[i - 1], stroke.points[i], stroke.color, stroke.width, stroke.glow);
       }
-      if (stroke.points.length === 1) {
+      if (stroke.points.length === 1 && stroke.points[0]) {
         drawSegment(
           ctx,
           stroke.points[0],
@@ -132,7 +134,7 @@ export default function RangoliGame() {
     if (e.target.setPointerCapture && e.pointerId) {
       try {
         e.target.setPointerCapture(e.pointerId);
-      } catch (err) {}
+      } catch {}
     }
     const coords = getCanvasCoords(e);
     isDrawingRef.current = true;
@@ -162,7 +164,7 @@ export default function RangoliGame() {
     if (e.target.releasePointerCapture && e.pointerId) {
       try {
         e.target.releasePointerCapture(e.pointerId);
-      } catch (err) {}
+      } catch {}
     }
     if (isDrawingRef.current && currentStrokeRef.current) {
       setHistory((prev) => [...prev, currentStrokeRef.current]);

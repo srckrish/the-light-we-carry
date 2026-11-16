@@ -11,7 +11,7 @@ export default function FootstepsGame() {
   const [bestRound, setBestRound] = useState(0);
   const [gameStarted, setGameStarted] = useState(false);
 
-  const { releaseLantern, playChimeNote, showToast } = useLight();
+  const { releaseLantern, playFootstep, showToast } = useLight();
   const isMountedRef = useRef(true);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function FootstepsGame() {
   const flashLamp = (index, duration = 380) => {
     return new Promise((resolve) => {
       setActiveLamp(index);
-      playChimeNote(index);
+      playFootstep(index);
       setTimeout(() => {
         if (!isMountedRef.current) return;
         setActiveLamp(null);
@@ -66,7 +66,7 @@ export default function FootstepsGame() {
     if (isPlayingSeq || !gameStarted) return;
 
     setActiveLamp(index);
-    playChimeNote(index);
+    playFootstep(index);
     setTimeout(() => {
       if (isMountedRef.current) setActiveLamp(null);
     }, 200);

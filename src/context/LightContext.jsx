@@ -1,5 +1,14 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { playChime, playResonantFlame } from "../lib/sound";
+import {
+  playChime,
+  playResonantFlame,
+  playRangoliSketchSound,
+  playFootstepBellSound,
+  playCardFlipSound,
+  playCardMatchSound,
+  playQuizAnswerSound,
+  playCatchLampSound,
+} from "../lib/sound";
 
 const LightContext = createContext(null);
 
@@ -68,6 +77,30 @@ export function LightProvider({ children }) {
     playChime(noteIndex, soundEnabled);
   }, [soundEnabled]);
 
+  const playRangoliStroke = useCallback((colorIndex = 0) => {
+    playRangoliSketchSound(colorIndex, soundEnabled);
+  }, [soundEnabled]);
+
+  const playFootstep = useCallback((lampIndex = 0) => {
+    playFootstepBellSound(lampIndex, soundEnabled);
+  }, [soundEnabled]);
+
+  const playCardFlip = useCallback(() => {
+    playCardFlipSound(soundEnabled);
+  }, [soundEnabled]);
+
+  const playCardMatch = useCallback((isSuccess = true) => {
+    playCardMatchSound(isSuccess, soundEnabled);
+  }, [soundEnabled]);
+
+  const playQuizResult = useCallback((isCorrect = true) => {
+    playQuizAnswerSound(isCorrect, soundEnabled);
+  }, [soundEnabled]);
+
+  const playCatch = useCallback((combo = 0) => {
+    playCatchLampSound(combo, soundEnabled);
+  }, [soundEnabled]);
+
   return (
     <LightContext.Provider
       value={{
@@ -79,6 +112,12 @@ export function LightProvider({ children }) {
         soundEnabled,
         toggleSound,
         playChimeNote,
+        playRangoliStroke,
+        playFootstep,
+        playCardFlip,
+        playCardMatch,
+        playQuizResult,
+        playCatch,
         toast,
         showToast,
       }}

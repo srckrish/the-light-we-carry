@@ -9,7 +9,7 @@ export default function QuizGame() {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
-  const { releaseLantern, playChimeNote, showToast } = useLight();
+  const { releaseLantern, playQuizResult, showToast } = useLight();
 
   const currentQ = QUIZ_QUESTIONS[currentIdx];
 
@@ -19,13 +19,11 @@ export default function QuizGame() {
     setIsAnswered(true);
 
     const isCorrect = idx === currentQ.answerIndex;
+    playQuizResult(isCorrect);
     if (isCorrect) {
       setScore((prev) => prev + 1);
       releaseLantern();
-      playChimeNote(4);
       showToast("Correct! A light released to the sky.");
-    } else {
-      playChimeNote(0);
     }
   };
 

@@ -38,7 +38,7 @@ export default function RangoliStudio({ isHero = false }) {
   const stageRef = useRef(null);
   const revealIdRef = useRef(0);
 
-  const { releaseLantern, playChimeNote, showToast } = useLight();
+  const { releaseLantern, playRangoliStroke, playChimeNote, showToast } = useLight();
 
   // ── Synchronised setters that update ref + state together ──
   const setSelectedColor = useCallback((c) => {
@@ -175,12 +175,14 @@ export default function RangoliStudio({ isHero = false }) {
 
     if (progress >= 1) {
       for (let i = 0; i < totalStrokes; i++) {
+        if (!history[i] || !history[i].points || history[i].points.length === 0) continue;
         drawStrokeContinuous(ctx, history[i], 1);
       }
     } else {
       // Staggered outward blossom: inner petals bloom first, spreading gracefully to the rim
       for (let idx = 0; idx < totalStrokes; idx++) {
         const stroke = history[idx];
+        if (!stroke || !stroke.points || stroke.points.length === 0) continue;
         const startT = (idx / totalStrokes) * 0.42;
         const endT = startT + 0.58;
         if (progress <= startT) continue;
@@ -294,6 +296,9 @@ export default function RangoliStudio({ isHero = false }) {
     isDrawingRef.current = true;
     currentStrokeRef.current = { color, width, glow, points: [coords] };
 
+    const colorIdx = RANGOLI_PALETTE.findIndex((p) => p.color === color);
+    playRangoliStroke(colorIdx >= 0 ? colorIdx : 0);
+
     const ctx = canvas.getContext("2d");
     if (ctx) drawSegment(ctx, coords, [coords[0] + 0.1, coords[1]], color, width, glow);
   };
@@ -340,7 +345,8 @@ export default function RangoliStudio({ isHero = false }) {
   // ── Actions ──
   const handleColorChange = (newColor) => {
     setSelectedColor(newColor);
-    playChimeNote(RANGOLI_PALETTE.findIndex((p) => p.color === newColor) % 6);
+    const colorIdx = RANGOLI_PALETTE.findIndex((p) => p.color === newColor);
+    playRangoliStroke(colorIdx >= 0 ? colorIdx : 0);
   };
 
   const handleRecolorAll = () => {
