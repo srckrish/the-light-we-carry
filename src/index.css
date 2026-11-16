@@ -1,307 +1,124 @@
-
-/* =========================================
-   1. TAILWIND CSS
-========================================= */
-
 @import "tailwindcss";
 
-
-/* =========================================
-   2. THEME CONFIGURATION
-========================================= */
-
 @theme {
-  /* Colors */
-  --color-midnight: #11110F;
-  --color-ivory: #F5EDDF;
-  --color-diya-gold: #D9A441;
-  --color-marigold: #E7A33E;
-  --color-vermilion: #9F452A;
+  --color-midnight: #09080E;
+  --color-ivory: #FAF5EE;
+  --color-gold: #F59E0B;
+  --color-amber-gold: #FBBF24;
   --color-terracotta: #B85C38;
-  --color-river: #416C70;
-  --color-sunset: #E88D45;
-  --color-sunrise: #F2C56E;
-  --color-night: #0F1B2A;
+  --color-sindoor: #E11D48;
+  --color-river: #0D9488;
 
-  /* Fonts */
-  --font-display: "Cormorant Garamond", "Noto Sans Devanagari", serif;
-  --font-body: "DM Sans", "Noto Sans Devanagari", sans-serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-devanagari: "Noto Sans Devanagari", sans-serif;
+
+  --animate-fade-in: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-flame-wave: flameWave 3s ease-in-out infinite;
+  --animate-flame-core: flameCore 2.4s ease-in-out infinite;
+  --animate-spin-slow: spinSlow 36s linear infinite;
+  --animate-bounce-subtle: bounceSubtle 0.3s ease-out forwards;
 }
 
-
-/* =========================================
-   3. GLOBAL STYLES
-========================================= */
-
-@layer base {
-  * {
-    box-sizing: border-box;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    @apply bg-midnight text-ivory font-body;
-
-    margin: 0;
-    min-width: 320px;
-    min-height: 100vh;
-  }
-
-  button {
-    font: inherit;
-    cursor: pointer;
-  }
-
-  img,
-  svg {
-    display: block;
-    max-width: 100%;
-  }
-
-  ::selection {
-    background-color: var(--color-diya-gold);
-    color: var(--color-midnight);
-  }
-}
-
-
-/* =========================================
-   4. DIYA FLAME
-   GSAP controls the outer group.
-========================================= */
-
-.diya-flame {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  will-change: transform, opacity;
-}
-
-
-/* =========================================
-   5. DIYA FLAME FLICKER
-   CSS controls continuous movement.
-========================================= */
-
-.diya-flame-flicker {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: flame-flicker 2.5s ease-in-out infinite;
-}
-
-@keyframes flame-flicker {
-  0%,
-  100% {
-    transform: scaleY(1) skewX(0deg);
-  }
-
-  25% {
-    transform: scaleY(1.025) skewX(-1.5deg);
-  }
-
-  50% {
-    transform: scaleY(0.98) skewX(1deg);
-  }
-
-  75% {
-    transform: scaleY(1.015) skewX(-0.8deg);
-  }
-}
-
-
-/* =========================================
-   6. DIYA GLOW
-   GSAP controls the glow.
-========================================= */
-
-.diya-glow {
-  transform-box: fill-box;
-  transform-origin: center;
-  will-change: transform, opacity;
-}
-
-
-/* =========================================
-   7. HERO INTRO
-========================================= */
-
-.intro-line {
-  visibility: hidden;
-}
-
-.diya-hint .diya-hint-glow {
-  animation: hint-glow 2.6s ease-in-out infinite;
-}
-
-@keyframes hint-glow {
-  0%,
-  100% {
+@keyframes fadeIn {
+  from {
     opacity: 0;
+    transform: translateY(10px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+@keyframes flameWave {
+  0%, 100% {
+    transform: scale(1) skewX(0deg);
+  }
+  25% {
+    transform: scale(1.05, 0.96) skewX(-1.5deg);
+  }
   50% {
+    transform: scale(0.98, 1.04) skewX(1deg);
+  }
+  75% {
+    transform: scale(1.03, 0.98) skewX(-0.5deg);
+  }
+}
+
+@keyframes flameCore {
+  0%, 100% {
+    transform: scale(1);
     opacity: 0.95;
   }
-}
-
-.crow-wing,
-.dog-tail,
-.ox-tail,
-.tika-bloom {
-  transform-box: fill-box;
-}
-
-.crow-wing {
-  transform-origin: 80% 80%;
-  animation: wing-lift 3.4s ease-in-out infinite;
-}
-
-.dog-tail,
-.ox-tail {
-  transform-origin: 80% 70%;
-  animation: tail-sway 2.8s ease-in-out infinite;
-}
-
-.tika-bloom {
-  transform-origin: center;
-  animation: bloom-turn 5s ease-in-out infinite;
-}
-
-.cow-lamps {
-  animation: lamp-glow 2.8s ease-in-out infinite;
-}
-
-@keyframes wing-lift {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-
   50% {
-    transform: rotate(-7deg);
-  }
-}
-
-@keyframes tail-sway {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-
-  50% {
-    transform: rotate(-8deg);
-  }
-}
-
-@keyframes bloom-turn {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-
-  50% {
-    transform: rotate(10deg);
-  }
-}
-
-@keyframes lamp-glow {
-  0%,
-  100% {
-    opacity: 0.72;
-  }
-
-  50% {
+    transform: scale(1.08, 0.95);
     opacity: 1;
   }
 }
 
-.chhath-scrub {
-  display: none;
-}
-
-@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-  .chhath-stack {
-    display: none;
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
   }
-
-  .chhath-scrub {
-    display: block;
-  }
-
-  .chhath-diyas-start {
-    transform: translateY(-170px);
+  to {
+    transform: rotate(360deg);
   }
 }
 
-
-/* =========================================
-   8. WATER RIPPLES
-   Slow horizontal movement for the river.
-========================================= */
-
-.water-ripple {
-  animation: water-ripple 9s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-.water-ripple-slow {
-  animation-duration: 12s;
-}
-
-.water-ripple-delayed {
-  animation-delay: -4s;
-}
-
-@keyframes water-ripple {
+@keyframes bounceSubtle {
   0% {
-    transform: translateX(-8px);
-    opacity: 0.2;
+    opacity: 0;
+    transform: translate(-50%, 12px) scale(0.95);
   }
-
-  50% {
-    opacity: 0.65;
-  }
-
   100% {
-    transform: translateX(12px);
-    opacity: 0.3;
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
   }
 }
 
-
-/* =========================================
-   9. CLOSING SCENE
-   Keep the final diya flame steady.
-========================================= */
-
-.closing-diya .diya-flame-flicker {
-  animation: none;
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+  color-scheme: dark;
 }
 
+body {
+  margin: 0;
+  background-color: #08070D;
+  color: #FAF5EE;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
 
-/* =========================================
-   10. ACCESSIBILITY
-   Respect reduced-motion preferences.
-========================================= */
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
 
+::-webkit-scrollbar-track {
+  background: #08070D;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(245, 158, 11, 0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 158, 11, 0.45);
+}
+
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  .diya-flame-flicker {
-    animation: none;
-  }
-
-  .water-ripple,
-  .diya-hint .diya-hint-glow,
-  .crow-wing,
-  .dog-tail,
-  .ox-tail,
-  .tika-bloom,
-  .cow-lamps {
-    animation: none;
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
