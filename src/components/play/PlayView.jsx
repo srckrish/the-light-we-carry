@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useLight } from "../../context/LightContext";
 import RangoliGame from "./games/RangoliGame";
@@ -62,7 +62,9 @@ const ALL_GAMES = [
 export default function PlayView() {
   const { gameId } = useParams();
   const navigate = useNavigate();
-  const { playChimeNote } = useLight();
+  const { playChimeNote, soundEnabled, toggleSound } = useLight();
+  const [hubDismissed, setHubDismissed] = useState(false);
+  const [gameDismissed, setGameDismissed] = useState(false);
 
   // Listen to Escape key to exit game
   useEffect(() => {
@@ -83,7 +85,7 @@ export default function PlayView() {
       {!gameId ? (
         /* Games Hub Grid */
         <div className="my-8">
-          <div className="text-center max-w-xl mx-auto mb-10">
+          <div className="text-center max-w-xl mx-auto mb-8">
             <p className="text-xs sm:text-sm font-semibold tracking-[0.25em] uppercase text-amber-400 mb-2">
               Play at home
             </p>
@@ -94,6 +96,40 @@ export default function PlayView() {
               Every win, saved pattern, and card sends a glowing light into the celestial sky.
             </p>
           </div>
+
+          {/* Chimes Recommendation in Hub */}
+          {!soundEnabled && !hubDismissed && (
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 sm:px-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-950/25 to-amber-500/10 border border-amber-500/30 backdrop-blur-xl mb-8 animate-fade-in text-center sm:text-left max-w-2xl mx-auto shadow-[0_0_25px_rgba(245,158,11,0.12)]">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl shrink-0 animate-bounce">🔔</span>
+                <div>
+                  <p className="text-xs sm:text-sm font-medium text-amber-200">
+                    Recommended: Turn on temple chimes
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-stone-400 font-light">
+                    Every game has custom melodic bells tuned to touches, card matches, and wins.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={toggleSound}
+                  className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 text-xs font-semibold tracking-wide transition-all hover:scale-105 active:scale-95 shadow-[0_0_12px_rgba(245,158,11,0.35)]"
+                >
+                  Turn chimes on 🔔
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setHubDismissed(true)}
+                  className="p-1.5 text-stone-400 hover:text-stone-200 text-xs rounded-full hover:bg-stone-800/50 transition-colors"
+                  aria-label="Dismiss recommendation"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {ALL_GAMES.map((game) => (
@@ -148,10 +184,62 @@ export default function PlayView() {
                 <span>{activeGameObj?.name}</span>
               </h2>
 
-              <span className="text-xs text-stone-500 hidden sm:inline">
-                Press Esc to exit
-              </span>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={toggleSound}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs transition-all border ${
+                    soundEnabled
+                      ? "bg-amber-500/15 border-amber-500/30 text-amber-300 hover:bg-amber-500/25 shadow-[0_0_10px_rgba(245,158,11,0.2)]"
+                      : "bg-stone-900/90 border-stone-700/60 text-stone-400 hover:text-amber-300 hover:border-amber-400/40"
+                  }`}
+                  title={soundEnabled ? "Mute temple chimes" : "Turn temple chimes on"}
+                  aria-pressed={soundEnabled}
+                >
+                  <span className={soundEnabled ? "animate-pulse" : "opacity-60"}>🔔</span>
+                  <span className="hidden sm:inline font-medium">
+                    {soundEnabled ? "Chimes on" : "Chimes off"}
+                  </span>
+                </button>
+                <span className="text-xs text-stone-500 hidden md:inline">
+                  Esc to exit
+                </span>
+              </div>
             </div>
+
+            {/* Active Game Chimes Recommendation Callout */}
+            {!soundEnabled && !gameDismissed && (
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-amber-950/30 to-amber-500/15 border border-amber-500/30 mb-6 text-xs text-amber-200 backdrop-blur-md animate-fade-in shadow-[0_0_20px_rgba(245,158,11,0.1)]">
+                <div className="flex items-center gap-2.5 text-center sm:text-left">
+                  <span className="text-xl shrink-0 animate-bounce">🔔</span>
+                  <div>
+                    <p className="font-semibold text-amber-200">
+                      Recommended: Turn on temple chimes
+                    </p>
+                    <p className="text-stone-400 text-[11px] font-light mt-0.5">
+                      This game responds with harmonic bell notes on each tap, match, and completion.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={toggleSound}
+                    className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-semibold text-xs tracking-wide transition-all hover:scale-105 active:scale-95 shadow-[0_0_12px_rgba(245,158,11,0.3)]"
+                  >
+                    Enable chimes 🔔
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setGameDismissed(true)}
+                    className="p-1 text-stone-400 hover:text-stone-200 text-xs rounded-full hover:bg-stone-800/50 transition-colors"
+                    aria-label="Dismiss recommendation"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Active Game Component */}
             {ActiveGameComponent ? (

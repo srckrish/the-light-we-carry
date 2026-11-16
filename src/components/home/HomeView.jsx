@@ -127,6 +127,9 @@ export default function HomeView() {
         >
           Explore all games →
         </Link>
+        <p className="text-xs text-amber-300/60 font-light mt-3">
+          Tip: Turn on temple chimes for musical notes with every move.
+        </p>
       </section>
 
       {/* ─── 5. Footer ─── */}
