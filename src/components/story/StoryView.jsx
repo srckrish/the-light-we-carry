@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import confetti from "canvas-confetti";
 import { useLight } from "../../context/LightContext";
 import { TIHAR_DAYS } from "../../data/festivalData";
 
@@ -13,6 +14,7 @@ import ChhathSoop from "../svg/ChhathSoop";
 
 const CHHATH_EXPERIENCE = {
   sunset: {
+    id: "sunset",
     title: "Sandhya Arghya · सन्ध्या अर्घ्य",
     time: "Sunset Twilight",
     icon: "🌅",
@@ -23,8 +25,15 @@ const CHHATH_EXPERIENCE = {
       { icon: "🎋", title: "Bamboo Soop", desc: "Lifting trays of Thekua, sugarcane, coconut, and harvest." },
       { icon: "🌅", title: "Astachalgami Surya", desc: "Offering arghya to the setting sun in grateful devotion." },
     ],
+    next: {
+      heading: "Sunset Arghya Offered · What's Next?",
+      desc: "Twilight fades into the sacred river. Devotees return to the riverbank to prepare clay elephant shrines (Kosiya) and gather under the stars for the night vigil.",
+      btnText: "Proceed to Night Vigil (Kosiya Bharai)",
+      targetSlider: 0.5,
+    },
   },
   night: {
+    id: "night",
     title: "Kosiya Bharai · रातको जागरण",
     time: "Midnight River Vigil",
     icon: "🌌",
@@ -35,8 +44,15 @@ const CHHATH_EXPERIENCE = {
       { icon: "🌌", title: "Starry Vigil", desc: "Families remain by the water through the peaceful night." },
       { icon: "🎶", title: "Folk Hymns", desc: "Singing age-old traditional songs celebrating Chhathi Maiya." },
     ],
+    next: {
+      heading: "Night Vigil Kept · What's Next?",
+      desc: "Lamps have stayed lit through the peaceful night. Before dawn breaks, devotees prepare sacred milk and wade back into the river to greet the returning sun.",
+      btnText: "Proceed to Dawn Sunrise (Usha Arghya)",
+      targetSlider: 0.85,
+    },
   },
   sunrise: {
+    id: "sunrise",
     title: "Usha Arghya · उषा अर्घ्य",
     time: "Dawn Awakening",
     icon: "☀️",
@@ -47,6 +63,11 @@ const CHHATH_EXPERIENCE = {
       { icon: "🥛", title: "Doodh Arghya", desc: "Pouring sacred milk and holy water toward the rising sun." },
       { icon: "🌾", title: "Paran (Fast Break)", desc: "Concluding the 36-hr fast and sharing blessed Thekua." },
     ],
+    next: {
+      heading: "Chhath Mahaparv Completed!",
+      desc: "The 36-hour waterless fast is joyfully concluded. Blessed Thekua prasad is distributed to family and community. May Lord Surya bring radiant health, warmth, and gratitude into your home.",
+      isComplete: true,
+    },
   },
 };
 
@@ -362,13 +383,21 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
                         for (let i = 0; i < 3; i++) {
                           setTimeout(releaseLantern, i * 180);
                         }
+                        if (currentChhathPhase === "sunrise") {
+                          confetti({
+                            particleCount: 75,
+                            spread: 80,
+                            origin: { y: 0.6 },
+                            colors: ["#F59E0B", "#FBBF24", "#FEF08A", "#FFFBEB"],
+                          });
+                        }
                         playChimeNote(currentChhathPhase === "sunset" ? 2 : currentChhathPhase === "night" ? 3 : 5);
                         showToast(activeExp.toast);
                       }}
                       disabled={ritualDone}
                       className={`w-full sm:w-auto px-7 py-3 rounded-full font-semibold text-xs sm:text-sm tracking-wide transition-all flex items-center justify-center gap-2 ${
                         ritualDone
-                          ? "bg-amber-900/40 text-amber-300/70 cursor-default border border-amber-500/25"
+                          ? "bg-amber-900/40 text-amber-300/80 cursor-default border border-amber-500/30"
                           : "bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:scale-105 active:scale-95"
                       }`}
                     >
@@ -376,6 +405,63 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
                       <span>{ritualDone ? "Ritual complete ✦" : activeExp.action}</span>
                     </button>
                   </div>
+
+                  {/* "What's Next" Narrative Progression Card */}
+                  {ritualDone && activeExp.next && (
+                    <div className="mt-4 p-4 rounded-2xl bg-gradient-to-br from-amber-500/20 via-stone-950/95 to-amber-950/40 border border-amber-400/40 shadow-xl text-left space-y-2.5 animate-fade-in">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold tracking-wider uppercase text-amber-300 flex items-center gap-1.5">
+                          <span>✦</span>
+                          <span>{activeExp.next.heading}</span>
+                        </span>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-400/15 text-amber-200 border border-amber-400/25">
+                          Next Stage
+                        </span>
+                      </div>
+
+                      <p className="text-xs text-stone-200 font-light leading-relaxed">
+                        {activeExp.next.desc}
+                      </p>
+
+                      <div className="pt-1 flex flex-wrap items-center gap-2">
+                        {!activeExp.next.isComplete ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setChhathSlider(activeExp.next.targetSlider);
+                              setRitualDone(false);
+                              playChimeNote(activeExp.next.targetSlider < 0.6 ? 3 : 5);
+                            }}
+                            className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-bold text-xs tracking-wide shadow-md hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-1.5"
+                          >
+                            <span>{activeExp.next.btnText}</span>
+                            <span>→</span>
+                          </button>
+                        ) : (
+                          <div className="flex flex-wrap items-center gap-2 w-full">
+                            <Link
+                              to="/play/card"
+                              className="px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 font-bold text-xs tracking-wide shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5"
+                            >
+                              <span>Share Festival Blessings</span>
+                              <span>💌</span>
+                            </Link>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setChhathSlider(0.15);
+                                setRitualDone(false);
+                                playChimeNote(1);
+                              }}
+                              className="px-4 py-2 rounded-full bg-stone-900 border border-amber-500/30 text-stone-300 hover:text-amber-200 text-xs transition-colors"
+                            >
+                              Experience Chhath Again ↺
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 

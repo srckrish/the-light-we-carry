@@ -170,50 +170,51 @@ export default function PlayView() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {ALL_GAMES.map((game) => {
-              const isHighlight = game.isFeatured;
-              return (
-                <Link
-                  key={game.id}
-                  to={`/play/${game.id}`}
-                  onClick={() => playChimeNote(2)}
-                  className={`group text-left p-6 rounded-3xl bg-stone-950/70 hover:bg-amber-950/40 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 focus-visible:ring-2 focus-visible:ring-amber-400 flex flex-col justify-between space-y-4 ${
-                    isHighlight
-                      ? "border-2 border-amber-400/60 shadow-[0_0_25px_rgba(245,158,11,0.25)] hover:shadow-[0_0_35px_rgba(245,158,11,0.4)]"
-                      : "border border-amber-500/20 hover:border-amber-400/60 hover:shadow-[0_15px_35px_rgba(245,158,11,0.2)]"
-                  }`}
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-3xl sm:text-4xl group-hover:scale-115 transition-transform block">
-                        {game.icon}
-                      </span>
-                      <span
-                        className={`text-[11px] px-2.5 py-0.5 rounded-full font-medium tracking-wide border ${
-                          isHighlight
-                            ? "bg-amber-400 text-stone-950 border-amber-300 font-bold shadow-[0_0_10px_rgba(245,158,11,0.4)]"
-                            : "bg-amber-500/15 text-amber-300 border-amber-500/25"
-                        }`}
-                      >
-                        {isHighlight ? "👑 Featured" : game.tag}
-                      </span>
-                    </div>
-                    <h3 className="font-display font-semibold text-2xl text-ivory group-hover:text-amber-200 transition-colors">
-                      {game.name}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-stone-400 mt-2 line-clamp-3 font-light leading-relaxed">
-                      {game.desc}
-                    </p>
-                  </div>
+          <div className="mt-12 mb-5 flex flex-col sm:flex-row sm:items-end justify-between pb-3 border-b border-amber-500/15 gap-1">
+            <div>
+              <p className="text-xs font-semibold tracking-wider uppercase text-amber-400">
+                Holiday Activities
+              </p>
+              <h3 className="font-display font-semibold text-2xl text-ivory">
+                More Festival Games
+              </h3>
+            </div>
+            <span className="text-xs text-stone-400 font-light">
+              Trivia, reflex games &amp; postcard maker
+            </span>
+          </div>
 
-                  <div className="pt-2 text-xs font-semibold tracking-wider uppercase text-amber-400 flex items-center gap-1 group-hover:gap-2 transition-all">
-                    <span>{isHighlight ? "Play Featured Ritual" : "Play game"}</span>
-                    <span>→</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {ALL_GAMES.filter((game) => !game.isFeatured).map((game) => (
+              <Link
+                key={game.id}
+                to={`/play/${game.id}`}
+                onClick={() => playChimeNote(2)}
+                className="group text-left p-5 rounded-2xl bg-stone-950/70 hover:bg-amber-950/35 border border-amber-500/20 hover:border-amber-400/60 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1.5 focus-visible:ring-2 focus-visible:ring-amber-400 flex flex-col justify-between space-y-3"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-3xl group-hover:scale-110 transition-transform block">
+                      {game.icon}
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full font-medium tracking-wide bg-amber-500/15 text-amber-300 border border-amber-500/25">
+                      {game.tag}
+                    </span>
                   </div>
-                </Link>
-              );
-            })}
+                  <h4 className="font-display font-semibold text-lg text-ivory group-hover:text-amber-200 transition-colors">
+                    {game.name}
+                  </h4>
+                  <p className="text-xs text-stone-400 mt-1.5 line-clamp-3 font-light leading-relaxed">
+                    {game.desc}
+                  </p>
+                </div>
+
+                <div className="pt-2 text-xs font-semibold tracking-wider uppercase text-amber-400 flex items-center gap-1 group-hover:gap-1.5 transition-all">
+                  <span>Play game</span>
+                  <span>→</span>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       ) : (
