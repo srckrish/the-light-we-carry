@@ -94,7 +94,7 @@ export default function FootstepsGame() {
         showToast("Laxmi's blessing received! Triple lights released.");
 
         confetti({
-          particleCount: 60,
+          particleCount: 65,
           spread: 70,
           origin: { y: 0.6 },
           colors: ["#F59E0B", "#FBBF24", "#FDE68A", "#FFFBEB"],
@@ -121,6 +121,45 @@ export default function FootstepsGame() {
         <p className="text-sm sm:text-base text-stone-200 font-light" aria-live="polite">
           {message}
         </p>
+      </div>
+
+      {/* Courtyard Path with Laxmi's Golden Footprints (Laxmi's Paila) */}
+      <div className="w-full flex items-center justify-center gap-3 py-2">
+        {Array.from({ length: 8 }).map((_, stepIdx) => {
+          const isUnlocked = sequence.length > stepIdx;
+          return (
+            <div
+              key={`footprint-${stepIdx}`}
+              className={`flex flex-col items-center gap-0.5 transition-all duration-700 ${
+                isUnlocked ? "opacity-100 scale-100" : "opacity-20 scale-75"
+              }`}
+              title={`Laxmi's Path Step ${stepIdx + 1}`}
+            >
+              {/* Sacred Footprint Pair (Left & Right) */}
+              <div className="flex items-center gap-1">
+                <svg viewBox="0 0 24 36" className="w-3.5 h-5 text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]" fill="currentColor">
+                  {/* Foot Sole */}
+                  <ellipse cx="12" cy="22" rx="7" ry="11" />
+                  {/* 5 Toes */}
+                  <circle cx="6" cy="7" r="2.2" />
+                  <circle cx="9.5" cy="5.2" r="2.4" />
+                  <circle cx="13.5" cy="5.5" r="2.2" />
+                  <circle cx="17" cy="7.2" r="2" />
+                  <circle cx="19.5" cy="9.8" r="1.8" />
+                </svg>
+                <svg viewBox="0 0 24 36" className="w-3.5 h-5 text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] scale-x-[-1]" fill="currentColor">
+                  <ellipse cx="12" cy="22" rx="7" ry="11" />
+                  <circle cx="6" cy="7" r="2.2" />
+                  <circle cx="9.5" cy="5.2" r="2.4" />
+                  <circle cx="13.5" cy="5.5" r="2.2" />
+                  <circle cx="17" cy="7.2" r="2" />
+                  <circle cx="19.5" cy="9.8" r="1.8" />
+                </svg>
+              </div>
+              <span className="text-[9px] text-amber-500/70 font-mono">{stepIdx + 1}</span>
+            </div>
+          );
+        })}
       </div>
 
       {/* 5 Glowing Diya Lamps */}

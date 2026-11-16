@@ -22,7 +22,6 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
     if (!isNaN(parsed) && parsed >= 1 && parsed <= 6) {
       dayIndex = parsed - 1;
     } else {
-      // String slug mapping
       const slugMap = {
         kaag: 0,
         kukur: 1,
@@ -82,19 +81,18 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
     return CHHATH_CAPTION_STEPS[2];
   };
 
-  // Render authentic SVG artwork per day
   const renderDayArtwork = () => {
     switch (dayIndex) {
       case 0:
-        return <Crow className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />;
+        return <Crow className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]" />;
       case 1:
-        return <Dog className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />;
+        return <Dog className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]" />;
       case 2:
-        return <Cow className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />;
+        return <Cow className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]" />;
       case 3:
-        return <Ox className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />;
+        return <Ox className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]" />;
       case 4:
-        return <TikaPlate className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />;
+        return <TikaPlate className="w-full max-w-[280px] h-auto mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.7)]" />;
       default:
         return null;
     }
@@ -105,7 +103,7 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
       {/* 1. Step Progress Bar */}
       <div className="my-4">
         <ol
-          className="flex items-center gap-2 max-w-2xl mx-auto"
+          className="flex items-center gap-2 sm:gap-3 max-w-3xl mx-auto"
           aria-label="Story chapters progress"
         >
           {TIHAR_DAYS.map((day, idx) => {
@@ -116,25 +114,28 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
                 <Link
                   to={`/story/${idx + 1}`}
                   onClick={() => playChimeNote(idx)}
-                  className="w-full h-9 flex flex-col justify-center group focus-visible:outline-none"
+                  className="w-full py-2 flex flex-col justify-center group focus-visible:outline-none"
                   aria-label={`${idx < 5 ? `Day ${idx + 1}: ${day.title}` : "Chhath"}`}
                 >
                   <div
-                    className={`h-1.5 w-full rounded-full transition-all duration-500 ${
+                    className={`h-2 w-full rounded-full transition-all duration-500 ${
                       isCur
-                        ? "bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.85)] scale-y-125"
+                        ? "bg-gradient-to-r from-amber-400 to-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.9)] scale-y-125"
                         : isPast
                         ? "bg-amber-600/70"
                         : "bg-stone-800/80 group-hover:bg-stone-700"
                     }`}
                   />
-                  <span
-                    className={`text-[10px] mt-1 font-medium tracking-wider uppercase text-center block transition-opacity ${
-                      isCur ? "text-amber-300 font-semibold" : "text-stone-500 opacity-60"
-                    }`}
-                  >
-                    {idx < 5 ? `Day ${idx + 1}` : "Chhath"}
-                  </span>
+                  <div className="flex items-center justify-center gap-1 mt-1.5">
+                    <span className="text-xs hidden sm:inline">{day.emoji}</span>
+                    <span
+                      className={`text-[11px] font-medium tracking-wider uppercase text-center block transition-opacity ${
+                        isCur ? "text-amber-300 font-semibold" : "text-stone-500 opacity-70"
+                      }`}
+                    >
+                      {idx < 5 ? `Day ${idx + 1}` : "Chhath"}
+                    </span>
+                  </div>
                 </Link>
               </li>
             );
@@ -144,18 +145,21 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
 
       {/* 2. Main Narrative Stage Card */}
       <div className="my-auto py-4">
-        <div className="relative p-6 sm:p-10 rounded-3xl bg-stone-950/75 border border-amber-500/25 backdrop-blur-2xl shadow-2xl shadow-black/90 max-w-3xl mx-auto transition-all duration-500">
+        <div className="relative p-6 sm:p-10 rounded-3xl bg-stone-950/80 border border-amber-500/25 backdrop-blur-2xl shadow-2xl shadow-black/90 max-w-3xl mx-auto transition-all duration-500">
           {!isChhath ? (
             /* Days 1 to 5 */
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               {/* Artwork Column */}
-              <div className="md:col-span-5 flex flex-col items-center justify-center p-4 rounded-2xl bg-amber-950/20 border border-amber-500/15">
+              <div className="md:col-span-5 flex flex-col items-center justify-center p-6 rounded-3xl bg-gradient-to-b from-amber-950/30 to-black/50 border border-amber-500/20 shadow-inner">
                 {renderDayArtwork()}
-                <span className="text-3xl mt-3">{currentDay.emoji}</span>
+                <div className="mt-4 flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/25 text-amber-300 text-xs font-medium">
+                  <span>{currentDay.emoji}</span>
+                  <span>{currentDay.tagline}</span>
+                </div>
               </div>
 
               {/* Story Narrative Column */}
-              <div className="md:col-span-7 space-y-3.5 text-left">
+              <div className="md:col-span-7 space-y-4 text-left">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold tracking-[0.25em] uppercase text-amber-400">
                     Day {dayIndex + 1} of 5 · Tihar
@@ -165,11 +169,11 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
                   </span>
                 </div>
 
-                <h2 className="font-display font-semibold text-3xl sm:text-4xl text-ivory tracking-tight leading-tight">
+                <h2 className="font-display font-semibold text-3xl sm:text-4xl lg:text-5xl text-ivory tracking-tight leading-tight">
                   {currentDay.title}
                 </h2>
 
-                <p className="font-devanagari text-lg sm:text-xl text-amber-300 tracking-wide font-normal">
+                <p className="font-devanagari text-xl sm:text-2xl text-amber-300/90 tracking-wide font-normal">
                   {currentDay.devanagari}
                 </p>
 
@@ -186,7 +190,7 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
                   <button
                     type="button"
                     onClick={handleRitualClick}
-                    className="px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-semibold text-xs sm:text-sm tracking-wide shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+                    className="px-7 py-3 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-semibold text-xs sm:text-sm tracking-wide shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
                   >
                     <span>{currentDay.emoji}</span>
                     <span>{currentDay.actionLabel}</span>
@@ -228,9 +232,9 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
               </div>
 
               {/* Interactive Time of Day Scrubber */}
-              <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/20 space-y-2">
+              <div className="p-5 rounded-2xl bg-amber-950/25 border border-amber-500/20 space-y-3">
                 <div className="flex justify-between items-center text-xs font-medium">
-                  <span className="text-stone-300">Drag to move through the sacred hours:</span>
+                  <span className="text-stone-300">Drag to transition between sunset, night, and sunrise:</span>
                   <span className="text-amber-400 font-semibold">{Math.round(chhathSlider * 100)}%</span>
                 </div>
 
@@ -264,7 +268,7 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
             </div>
           )}
 
-          {/* Navigation Controls */}
+          {/* Navigation Controls with Real Unicode Arrows */}
           <div className="mt-8 pt-5 border-t border-amber-500/15 flex items-center justify-between">
             <button
               type="button"
@@ -278,11 +282,11 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
                   : "border-amber-500/30 text-stone-300 hover:text-amber-200 hover:border-amber-400"
               }`}
             >
-              &larr; Back
+              ← Back
             </button>
 
             <span className="text-xs text-stone-500 hidden sm:inline">
-              Use &larr; &rarr; arrow keys to navigate
+              Use ← → arrow keys to navigate
             </span>
 
             <button
@@ -294,9 +298,9 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
                   navigate("/play/card");
                 }
               }}
-              className="px-6 py-2 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 font-semibold text-xs sm:text-sm tracking-wide hover:scale-105 transition-all shadow-[0_0_15px_rgba(245,158,11,0.35)]"
+              className="px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 font-semibold text-xs sm:text-sm tracking-wide hover:scale-105 transition-all shadow-[0_0_15px_rgba(245,158,11,0.35)]"
             >
-              {dayIndex === 5 ? "Make a card &rarr;" : "Next day &rarr;"}
+              {dayIndex === 5 ? "Make a card →" : "Next day →"}
             </button>
           </div>
         </div>

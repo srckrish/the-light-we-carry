@@ -3,16 +3,24 @@ import confetti from "canvas-confetti";
 import { WISH_PRESETS } from "../../../data/festivalData";
 import { useLight } from "../../../context/LightContext";
 
+const THEMES = [
+  { id: "midnight", label: "Midnight Gold", bg1: "#22130A", bg2: "#060509", gold: "#D9A441", flame: "#F2C56E" },
+  { id: "sayapatri", label: "Sayapatri Amber", bg1: "#361608", bg2: "#140703", gold: "#F59E0B", flame: "#FEF08A" },
+  { id: "himalayan", label: "Himalayan Dawn", bg1: "#1A2238", bg2: "#070B16", gold: "#FBBF24", flame: "#FFEDD5" },
+];
+
 export default function WishCardGame() {
   const canvasRef = useRef(null);
   const [name, setName] = useState("");
   const [selectedWishIdx, setSelectedWishIdx] = useState(0);
   const [customWish, setCustomWish] = useState("");
+  const [selectedTheme, setSelectedTheme] = useState("midnight");
   const [canShare, setCanShare] = useState(false);
 
   const { releaseLantern, playChimeNote, showToast } = useLight();
 
   const currentWishText = customWish.trim() || WISH_PRESETS[selectedWishIdx];
+  const themeObj = THEMES.find((t) => t.id === selectedTheme) || THEMES[0];
 
   const renderCard = useCallback(async () => {
     const canvas = canvasRef.current;
@@ -31,17 +39,17 @@ export default function WishCardGame() {
     canvas.width = w;
     canvas.height = h;
 
-    // Background gradient: velvet obsidian into warm terracotta night
+    // Background gradient: themed radial
     const bgGrad = ctx.createRadialGradient(w / 2, h * 0.44, 20, w / 2, h * 0.44, 760);
-    bgGrad.addColorStop(0, "#22130A");
-    bgGrad.addColorStop(0.55, "#100B14");
-    bgGrad.addColorStop(1, "#060509");
+    bgGrad.addColorStop(0, themeObj.bg1);
+    bgGrad.addColorStop(0.65, themeObj.bg2);
+    bgGrad.addColorStop(1, "#030206");
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, w, h);
 
     // Starlight dust
     ctx.fillStyle = "#FFFFFF";
-    for (let i = 0; i < 90; i++) {
+    for (let i = 0; i < 95; i++) {
       ctx.globalAlpha = 0.15 + ((i * 37) % 10) / 14;
       ctx.beginPath();
       ctx.arc((i * 389) % w, ((i * 211) % 650) + 60, 1 + (i % 3) * 0.8, 0, Math.PI * 2);
@@ -50,7 +58,7 @@ export default function WishCardGame() {
     ctx.globalAlpha = 1;
 
     // Outer double ornamental gold border
-    ctx.strokeStyle = "#D9A441";
+    ctx.strokeStyle = themeObj.gold;
     ctx.lineWidth = 3.5;
     ctx.strokeRect(50, 50, w - 100, h - 100);
     ctx.lineWidth = 1.2;
@@ -63,7 +71,7 @@ export default function WishCardGame() {
       [68, h - 68],
       [w - 68, h - 68],
     ];
-    ctx.fillStyle = "#F59E0B";
+    ctx.fillStyle = themeObj.gold;
     for (const [cx, cy] of corners) {
       ctx.beginPath();
       ctx.arc(cx, cy, 6, 0, Math.PI * 2);
@@ -93,7 +101,7 @@ export default function WishCardGame() {
     ctx.fill();
 
     // Golden Outer Flame
-    ctx.fillStyle = "#F2C56E";
+    ctx.fillStyle = themeObj.flame;
     ctx.beginPath();
     ctx.moveTo(w / 2, 450);
     ctx.quadraticCurveTo(630, 580, w / 2, 670);
@@ -110,7 +118,7 @@ export default function WishCardGame() {
 
     // Header Text: "T I H A R · C H H A T H"
     ctx.textAlign = "center";
-    ctx.fillStyle = "#D9A441";
+    ctx.fillStyle = themeObj.gold;
     ctx.font = '600 32px "DM Sans", sans-serif';
     ctx.fillText("T I H A R   ·   C H H A T H", w / 2, 180);
 
@@ -126,7 +134,7 @@ export default function WishCardGame() {
 
     // Wish Blessing Text (wrapped)
     ctx.font = '500 42px "Cormorant Garamond", Georgia, serif';
-    ctx.fillStyle = "#F2C56E";
+    ctx.fillStyle = themeObj.gold;
     const words = currentWishText.split(" ");
     let line = "";
     let yPos = 1050;
@@ -148,7 +156,7 @@ export default function WishCardGame() {
     ctx.font = '500 24px "DM Sans", sans-serif';
     ctx.fillStyle = "#A89D88";
     ctx.fillText("The Light We Carry · Nepal", w / 2, 1260);
-  }, [name, currentWishText]);
+  }, [name, currentWishText, themeObj]);
 
   useEffect(() => {
     renderCard();
@@ -225,6 +233,29 @@ export default function WishCardGame() {
     <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 max-w-4xl mx-auto">
       {/* Form Controls */}
       <div className="flex-1 space-y-5 text-left w-full">
+        {/* Aesthetic Theme Picker */}
+        <div>
+          <span className="block text-xs font-semibold tracking-wider uppercase text-amber-400 mb-2">
+            Card Aesthetic
+          </span>
+          <div className="flex items-center gap-2">
+            {THEMES.map((th) => (
+              <button
+                key={th.id}
+                type="button"
+                onClick={() => setSelectedTheme(th.id)}
+                className={`px-3 py-1.5 rounded-xl border text-xs font-medium transition-all ${
+                  selectedTheme === th.id
+                    ? "bg-amber-500/20 border-amber-400 text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.3)] scale-105"
+                    : "bg-stone-900 border-amber-500/15 text-stone-400 hover:border-amber-500/40"
+                }`}
+              >
+                {th.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div>
           <label htmlFor="card-name" className="block text-xs font-semibold tracking-wider uppercase text-amber-400 mb-1.5">
             Recipient Name (up to 24 characters)
@@ -309,7 +340,7 @@ export default function WishCardGame() {
       {/* Card Canvas Preview */}
       <div className="w-full lg:w-80 shrink-0">
         <p className="text-xs text-stone-400 mb-2 text-center lg:text-left">
-          Live Preview (1080 &times; 1350 HD):
+          Live Preview (1080 × 1350 HD):
         </p>
         <div className="rounded-2xl p-1 bg-stone-950/90 border border-amber-500/30 shadow-2xl overflow-hidden backdrop-blur-xl">
           <canvas

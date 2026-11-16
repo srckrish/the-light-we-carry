@@ -179,31 +179,61 @@ export default function RangoliGame() {
     setHistory([]);
   };
 
-  const handleSurpriseMe = () => {
+  const loadPreset = (presetName) => {
     const newStrokes = [];
-    const colors = [PALETTE[0].color, PALETTE[1].color, PALETTE[2].color, PALETTE[3].color, PALETTE[5].color, PALETTE[6].color];
-
-    for (let layer = 0; layer < 5; layer++) {
-      const pts = [];
-      const baseR = 40 + layer * 52;
-      const phase = Math.random() * Math.PI * 2;
-      const color = colors[layer % colors.length];
-
-      for (let i = 0; i <= 64; i++) {
-        const angle = (i / 64) * Math.PI * 0.5 + phase;
-        const radius = baseR + Math.sin(i * 0.48 + layer) * 28;
-        pts.push([Math.cos(angle) * radius * 0.72, Math.sin(angle) * radius]);
+    if (presetName === "lotus") {
+      // Sacred Lotus Bloom (पद्म)
+      const colors = ["#E11D48", "#F2C56E", "#E7742E", "#F5EDDF"];
+      for (let layer = 0; layer < 4; layer++) {
+        const pts = [];
+        const baseR = 50 + layer * 55;
+        const color = colors[layer % colors.length];
+        for (let i = 0; i <= 60; i++) {
+          const a = (i / 60) * Math.PI * 0.45;
+          const r = baseR + Math.sin(i * 0.5) * 32;
+          pts.push([Math.cos(a) * r * 0.7, Math.sin(a) * r]);
+        }
+        newStrokes.push({ color, width: 4.5, glow: true, points: pts });
       }
-      newStrokes.push({
-        color,
-        width: 4.5,
-        glow: true,
-        points: pts,
-      });
+    } else if (presetName === "sayapatri") {
+      // Sayapatri Marigold Mandala (सयपत्री)
+      const colors = ["#F2C56E", "#E7742E", "#C2412D", "#F5EDDF", "#7BAE5A"];
+      for (let layer = 0; layer < 5; layer++) {
+        const pts = [];
+        const baseR = 40 + layer * 50;
+        const phase = layer * 0.4;
+        const color = colors[layer % colors.length];
+        for (let i = 0; i <= 64; i++) {
+          const a = (i / 64) * Math.PI * 0.5 + phase;
+          const r = baseR + Math.sin(i * 0.6 + layer) * 25;
+          pts.push([Math.cos(a) * r * 0.8, Math.sin(a) * r]);
+        }
+        newStrokes.push({ color, width: 4, glow: true, points: pts });
+      }
+    } else if (presetName === "diya") {
+      // Diya Rosette (दियो)
+      const colors = ["#F2C56E", "#C2412D", "#14B8A6", "#F2C56E"];
+      for (let layer = 0; layer < 4; layer++) {
+        const pts = [];
+        const baseR = 60 + layer * 60;
+        const color = colors[layer % colors.length];
+        for (let i = 0; i <= 50; i++) {
+          const a = (i / 50) * Math.PI * 0.5;
+          const r = baseR + Math.cos(i * 0.4) * 20;
+          pts.push([Math.cos(a) * r * 0.65, Math.sin(a) * r * 0.9]);
+        }
+        newStrokes.push({ color, width: 5, glow: true, points: pts });
+      }
     }
     setHistory(newStrokes);
     playChimeNote(3);
-    showToast("Sacred mandala rosette materialized.");
+    showToast(`Loaded ${presetName} mandala rosette.`);
+  };
+
+  const handleSurpriseMe = () => {
+    const presets = ["lotus", "sayapatri", "diya"];
+    const randomPreset = presets[Math.floor(Math.random() * presets.length)];
+    loadPreset(randomPreset);
 
     confetti({
       particleCount: 25,
@@ -238,6 +268,25 @@ export default function RangoliGame() {
       <p className="text-xs sm:text-sm text-stone-300 text-center font-light">
         Draw with finger or mouse. Your lines seamlessly blossom into a 16-axis sacred rosette mandala.
       </p>
+
+      {/* Preset Inspirations Bar */}
+      <div className="flex items-center gap-2 text-xs">
+        <span className="text-stone-400 font-medium">Motifs:</span>
+        {[
+          { id: "lotus", label: "🌸 Lotus" },
+          { id: "sayapatri", label: "🌼 Sayapatri" },
+          { id: "diya", label: "🪔 Diya Star" },
+        ].map((pr) => (
+          <button
+            key={pr.id}
+            type="button"
+            onClick={() => loadPreset(pr.id)}
+            className="px-3 py-1 rounded-full bg-amber-950/40 hover:bg-amber-900/50 border border-amber-500/25 text-amber-300 text-[11px] font-medium transition-all"
+          >
+            {pr.label}
+          </button>
+        ))}
+      </div>
 
       {/* Drawing Canvas Container */}
       <div className="relative p-2 rounded-3xl bg-stone-950/90 border border-amber-500/30 shadow-2xl backdrop-blur-2xl">

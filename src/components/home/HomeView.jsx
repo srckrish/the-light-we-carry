@@ -62,7 +62,7 @@ export default function HomeView() {
     <div className="relative z-10 min-h-screen pt-20 pb-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto flex flex-col justify-between">
       {/* 1. Hero Atmosphere */}
       <section className="flex flex-col items-center justify-center min-h-[70vh] text-center my-2">
-        {/* The Central Flame */}
+        {/* The Central Flame with Sacred Floor Rangoli */}
         <CentralDiya />
 
         {/* Dynamic Village Lighting Illustration */}
@@ -77,10 +77,11 @@ export default function HomeView() {
 
         {/* Revealed Content when Lit */}
         <div
-          className={`transition-all duration-1000 max-w-2xl mx-auto ${lit
+          className={`transition-all duration-1000 max-w-2xl mx-auto ${
+            lit
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-4 pointer-events-none"
-            }`}
+          }`}
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-semibold tracking-[0.25em] uppercase mb-4 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
             <span>🪔</span>
@@ -104,7 +105,7 @@ export default function HomeView() {
               to="/story"
               className="px-8 py-3.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 text-stone-950 font-semibold tracking-wide hover:scale-105 active:scale-95 transition-all shadow-[0_0_25px_rgba(245,158,11,0.45)] text-sm sm:text-base"
             >
-              Begin the journey &rarr;
+              Begin the journey →
             </Link>
 
             <Link
@@ -179,7 +180,7 @@ export default function HomeView() {
             className="text-xs sm:text-sm text-amber-300 hover:text-amber-200 transition-colors flex items-center gap-1 font-medium group"
           >
             <span>Explore all games</span>
-            <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
 
@@ -211,6 +212,17 @@ export default function HomeView() {
           ))}
         </div>
       </section>
+
+      {/* 4. Poetic Footer */}
+      <footer className="mt-24 pt-10 border-t border-amber-500/15 text-center text-xs text-stone-400/90 space-y-2">
+        <p className="font-display text-base text-amber-200/90 font-medium">
+          The Light We Carry · Nepal’s Festival of Lights
+        </p>
+        <p>Made for the KUCC Tihar–Chhath Web UI Design Competition 2026.</p>
+        <p className="text-stone-500 font-light text-[11px]">
+          Everything on screen is drawn in code. May gratitude and light find their way into every home.
+        </p>
+      </footer>
     </div>
   );
 }

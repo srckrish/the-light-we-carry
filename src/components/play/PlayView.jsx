@@ -122,7 +122,7 @@ export default function PlayView() {
 
                 <div className="pt-2 text-xs font-semibold tracking-wider uppercase text-amber-400 flex items-center gap-1 group-hover:gap-2 transition-all">
                   <span>Play game</span>
-                  <span>&rarr;</span>
+                  <span>→</span>
                 </div>
               </Link>
             ))}
@@ -139,7 +139,7 @@ export default function PlayView() {
                 onClick={() => playChimeNote(1)}
                 className="text-xs sm:text-sm text-amber-400 hover:text-amber-200 transition-colors flex items-center gap-1.5 font-medium group focus-visible:outline-none"
               >
-                <span className="group-hover:-translate-x-1 transition-transform">&larr;</span>
+                <span className="group-hover:-translate-x-1 transition-transform">←</span>
                 <span>All games</span>
               </Link>
 

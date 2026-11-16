@@ -61,7 +61,7 @@ export default function QuizGame() {
             <span className="text-xs font-semibold tracking-widest uppercase text-amber-400">
               Question {currentIdx + 1} of {QUIZ_QUESTIONS.length}
             </span>
-            <span className="text-xs text-stone-400">
+            <span className="text-xs text-stone-400 font-medium">
               Score: {score}
             </span>
           </div>
@@ -118,7 +118,7 @@ export default function QuizGame() {
             </div>
           )}
 
-          {/* Next Button */}
+          {/* Next Button with real unicode arrow */}
           {isAnswered && (
             <div className="w-full flex justify-end pt-2">
               <button
@@ -126,7 +126,7 @@ export default function QuizGame() {
                 onClick={handleNext}
                 className="px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 font-semibold text-xs sm:text-sm tracking-wide hover:scale-105 transition-all shadow-[0_0_15px_rgba(245,158,11,0.4)]"
               >
-                {currentIdx === QUIZ_QUESTIONS.length - 1 ? "See result &rarr;" : "Next &rarr;"}
+                {currentIdx === QUIZ_QUESTIONS.length - 1 ? "See result →" : "Next question →"}
               </button>
             </div>
           )}
