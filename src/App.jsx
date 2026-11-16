@@ -73,7 +73,7 @@ export default function App() {
         <div
           role="status"
           aria-live="polite"
-          className="fixed bottom-20 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 rounded-full bg-stone-950/95 border border-amber-400/50 text-amber-300 text-xs sm:text-sm font-medium tracking-wide shadow-[0_0_30px_rgba(245,158,11,0.45)] backdrop-blur-2xl animate-bounce-subtle pointer-events-none flex items-center gap-2"
+          className="fixed top-[4.75rem] sm:top-20 left-1/2 z-50 max-w-[min(92vw,26rem)] px-5 py-2.5 rounded-full bg-stone-950/95 border border-amber-400/50 text-amber-300 text-xs sm:text-sm font-medium tracking-wide shadow-[0_8px_30px_rgba(0,0,0,0.45)] backdrop-blur-2xl animate-toast-in pointer-events-none flex items-center gap-2 text-center"
         >
           <span className="text-amber-400 animate-spin-slow">✦</span>
           <span>{toast.message}</span>

@@ -79,13 +79,15 @@ export default function CentralDiya() {
         </svg>
       </div>
 
-      {/* Diya Button */}
+      {/* Diya Button — large tap target, works on first click */}
       <button
         type="button"
         onClick={light}
-        aria-label={lit ? "The first diya is burning brightly" : "Tap to light the first diya and awaken the festival"}
-        className={`group relative z-10 w-48 h-48 sm:w-56 sm:h-56 rounded-full flex items-center justify-center transition-all duration-700 outline-none focus-visible:ring-4 focus-visible:ring-amber-400/60 ${
-          lit ? "cursor-default" : "cursor-pointer hover:scale-105 active:scale-95"
+        aria-label={lit ? "The diya is burning brightly" : "Tap to light the diya"}
+        className={`group relative z-10 rounded-full flex items-center justify-center transition-all duration-700 outline-none focus-visible:ring-4 focus-visible:ring-amber-400/60 ${
+          lit
+            ? "w-48 h-48 sm:w-56 sm:h-56 cursor-default"
+            : "w-56 h-56 sm:w-64 sm:h-64 cursor-pointer hover:scale-105 active:scale-95"
         }`}
       >
         {/* Ambient Radial Flame Bloom */}
@@ -100,7 +102,7 @@ export default function CentralDiya() {
         {/* Diya SVG Artwork */}
         <svg
           viewBox="0 0 240 200"
-          className="w-44 h-44 sm:w-52 sm:h-52 drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]"
+          className="w-44 h-44 sm:w-52 sm:h-52 drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] pointer-events-none"
           aria-hidden="true"
         >
           <defs>
@@ -175,11 +177,11 @@ export default function CentralDiya() {
               <circle
                 cx="120"
                 cy="103"
-                r="4"
+                r="6"
                 className="fill-amber-400 animate-ping opacity-75"
               />
-              <circle cx="120" cy="103" r="3" fill="#F59E0B" />
-              <circle cx="120" cy="103" r="1.5" fill="#FFFBEB" />
+              <circle cx="120" cy="103" r="4" fill="#F59E0B" />
+              <circle cx="120" cy="103" r="2" fill="#FFFBEB" />
             </g>
           )}
         </svg>
@@ -190,7 +192,7 @@ export default function CentralDiya() {
         <div className="mt-3 flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-950/60 border border-amber-500/30 backdrop-blur-md shadow-lg animate-pulse">
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
           <span className="text-xs sm:text-sm font-semibold tracking-[0.25em] uppercase text-amber-300">
-            Tap the diya to ignite the festival
+            Tap the diya to begin
           </span>
         </div>
       )}

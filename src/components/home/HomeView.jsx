@@ -10,8 +10,8 @@ export default function HomeView() {
 
   return (
     <div className="relative z-10 min-h-screen pt-20 pb-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-      {/* ─── 1. Hero ─── */}
-      <section className="flex flex-col items-center justify-center min-h-[65vh] text-center my-2">
+      {/* ─── 1. Hero: Diya + Village ─── */}
+      <section className="flex flex-col items-center justify-center min-h-[55vh] text-center my-2">
         <CentralDiya />
 
         <div className="w-full max-w-3xl mx-auto -mt-6 mb-6">
@@ -23,30 +23,13 @@ export default function HomeView() {
           </p>
         </div>
 
+        {/* Simple CTAs — appear immediately after lighting */}
         <div
-          className={`transition-all duration-1000 max-w-2xl mx-auto ${
+          className={`transition-all duration-700 ${
             lit ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
           }`}
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-semibold tracking-[0.25em] uppercase mb-4 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
-            <span>🪔</span>
-            <span>Tihar · Chhath</span>
-          </div>
-
-          <h1 className="font-display font-semibold text-4xl sm:text-6xl lg:text-7xl leading-[1.04] tracking-tight text-ivory drop-shadow-[0_2px_24px_rgba(0,0,0,0.85)]">
-            A little light,
-            <br />
-            <em className="italic font-medium text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200">
-              a thousand thanks.
-            </em>
-          </h1>
-
-          <p className="mt-4 text-base sm:text-xl text-stone-300 font-light max-w-lg mx-auto leading-relaxed">
-            Nepal's festival of lights, in five days. From crows and dogs to
-            sisters, and the sacred sunrise on the river.
-          </p>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               to="/story"
               className="px-8 py-3.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 text-stone-950 font-semibold tracking-wide hover:scale-105 active:scale-95 transition-all shadow-[0_0_25px_rgba(245,158,11,0.45)] text-sm sm:text-base"
@@ -126,7 +109,7 @@ export default function HomeView() {
         </div>
       </section>
 
-      {/* ─── 4. Play banner (replaces crowded activity grid) ─── */}
+      {/* ─── 4. Play banner ─── */}
       <section className="mt-20 sm:mt-28 text-center">
         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-amber-400 mb-3">
           Games &amp; Traditions
@@ -151,9 +134,8 @@ export default function HomeView() {
         <p className="font-display text-base text-amber-200/90 font-medium">
           The Light We Carry · Nepal's Festival of Lights
         </p>
-        <p>Made for the KUCC Tihar–Chhath Web UI Design Competition 2026.</p>
         <p className="text-stone-500 font-light text-[11px]">
-          Everything on screen is drawn in code. May gratitude and light find
+          May gratitude and light find
           their way into every home.
         </p>
       </footer>

@@ -65,6 +65,7 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
   }, [dayIndex, navigate]);
 
   const handleRitualClick = () => {
+    if (ritualDone) return; // prevent repeat
     setRitualDone(true);
     for (let i = 0; i < 3; i++) {
       setTimeout(() => {
@@ -185,23 +186,21 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
                   {currentDay.deepDescription}
                 </p>
 
-                {/* Ritual Action */}
+                {/* Ritual Action — no duplicate inline toast */}
                 <div className="pt-3 flex flex-wrap items-center gap-3">
                   <button
                     type="button"
                     onClick={handleRitualClick}
-                    className="px-7 py-3 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-semibold text-xs sm:text-sm tracking-wide shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+                    disabled={ritualDone}
+                    className={`px-7 py-3 rounded-full font-semibold text-xs sm:text-sm tracking-wide transition-all flex items-center gap-2 ${
+                      ritualDone
+                        ? "bg-amber-900/40 text-amber-300/70 cursor-default border border-amber-500/25"
+                        : "bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:scale-105 active:scale-95"
+                    }`}
                   >
                     <span>{currentDay.emoji}</span>
-                    <span>{currentDay.actionLabel}</span>
+                    <span>{ritualDone ? "Offering complete ✦" : currentDay.actionLabel}</span>
                   </button>
-
-                  {ritualDone && (
-                    <span className="text-xs text-amber-300 animate-fade-in flex items-center gap-1.5 font-medium">
-                      <span>✦</span>
-                      <span>{currentDay.toastMessage}</span>
-                    </span>
-                  )}
                 </div>
               </div>
             </div>
@@ -268,7 +267,7 @@ export default function StoryView({ chhathSlider, setChhathSlider }) {
             </div>
           )}
 
-          {/* Navigation Controls with Real Unicode Arrows */}
+          {/* Navigation Controls */}
           <div className="mt-8 pt-5 border-t border-amber-500/15 flex items-center justify-between">
             <button
               type="button"
